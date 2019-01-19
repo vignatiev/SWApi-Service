@@ -1,0 +1,7 @@
+strings:
+  inputs: starWars_arcsinus/Sources/Resources/en.lproj/Localizable.strings
+  outputs:
+    - templateName: flat-swift4
+      output: starWars_arcsinus/Sources/Core/Constants/Strings.swift
+      params:
+        enumName: LocalizedString

@@ -12,6 +12,10 @@
 		9B6B839F21F2F65200554D2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B839D21F2F65200554D2D /* Main.storyboard */; };
 		9B6B83A121F2F65500554D2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B83A021F2F65500554D2D /* Assets.xcassets */; };
 		9B6B83A421F2F65500554D2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B83A221F2F65500554D2D /* LaunchScreen.storyboard */; };
+		9B6B83B321F301C700554D2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B83B521F301C700554D2D /* Localizable.strings */; };
+		9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B83B921F3035B00554D2D /* Strings.swift */; };
+		9B6B83BC21F3037600554D2D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B83BB21F3037600554D2D /* Constants.swift */; };
+		9B6B83C021F3076100554D2D /* UIView+Xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B83BF21F3076100554D2D /* UIView+Xib.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,11 @@
 		9B6B83A021F2F65500554D2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B6B83A321F2F65500554D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B6B83A521F2F65500554D2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B6B83B421F301C700554D2D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9B6B83B621F301DA00554D2D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9B6B83B921F3035B00554D2D /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		9B6B83BB21F3037600554D2D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9B6B83BF21F3076100554D2D /* UIView+Xib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Xib.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +63,90 @@
 		9B6B839821F2F65200554D2D /* starWars_arcsinus */ = {
 			isa = PBXGroup;
 			children = (
-				9B6B839921F2F65200554D2D /* AppDelegate.swift */,
-				9B6B839B21F2F65200554D2D /* ViewController.swift */,
-				9B6B839D21F2F65200554D2D /* Main.storyboard */,
-				9B6B83A021F2F65500554D2D /* Assets.xcassets */,
-				9B6B83A221F2F65500554D2D /* LaunchScreen.storyboard */,
-				9B6B83A521F2F65500554D2D /* Info.plist */,
+				9B6B83AD21F3008F00554D2D /* Sources */,
 			);
 			path = starWars_arcsinus;
+			sourceTree = "<group>";
+		};
+		9B6B83AD21F3008F00554D2D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B839921F2F65200554D2D /* AppDelegate.swift */,
+				9B6B83B721F3031100554D2D /* Core */,
+				9B6B83AF21F3010000554D2D /* PresentationLayer */,
+				9B6B83AE21F300E700554D2D /* Resources */,
+				9B6B83B021F3016200554D2D /* Configs */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		9B6B83AE21F300E700554D2D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83A021F2F65500554D2D /* Assets.xcassets */,
+				9B6B83BD21F3062000554D2D /* Storyboards */,
+				9B6B83B521F301C700554D2D /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9B6B83AF21F3010000554D2D /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B839B21F2F65200554D2D /* ViewController.swift */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		9B6B83B021F3016200554D2D /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83A521F2F65500554D2D /* Info.plist */,
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
+		9B6B83B721F3031100554D2D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83B821F3032A00554D2D /* Constants */,
+				9B6B83BE21F3071E00554D2D /* Extensions */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9B6B83B821F3032A00554D2D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83BB21F3037600554D2D /* Constants.swift */,
+				9B6B83B921F3035B00554D2D /* Strings.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		9B6B83BD21F3062000554D2D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83A221F2F65500554D2D /* LaunchScreen.storyboard */,
+				9B6B839D21F2F65200554D2D /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		9B6B83BE21F3071E00554D2D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83C121F3076B00554D2D /* UIView */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9B6B83C121F3076B00554D2D /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				9B6B83BF21F3076100554D2D /* UIView+Xib.swift */,
+			);
+			path = UIView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,6 +156,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B6B83A821F2F65500554D2D /* Build configuration list for PBXNativeTarget "starWars_arcsinus" */;
 			buildPhases = (
+				9B6B83AC21F2FF5500554D2D /* ShellScript */,
+				9B6B83AB21F2FDFC00554D2D /* ShellScript */,
 				9B6B839221F2F65200554D2D /* Sources */,
 				9B6B839321F2F65200554D2D /* Frameworks */,
 				9B6B839421F2F65200554D2D /* Resources */,
@@ -106,6 +193,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 9B6B838D21F2F65200554D2D;
 			productRefGroup = 9B6B839721F2F65200554D2D /* Products */;
@@ -123,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B6B83A421F2F65500554D2D /* LaunchScreen.storyboard in Resources */,
+				9B6B83B321F301C700554D2D /* Localizable.strings in Resources */,
 				9B6B83A121F2F65500554D2D /* Assets.xcassets in Resources */,
 				9B6B839F21F2F65200554D2D /* Main.storyboard in Resources */,
 			);
@@ -130,13 +219,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9B6B83AB21F2FDFC00554D2D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		9B6B83AC21F2FF5500554D2D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftgen >/dev/null; then\nswiftgen\nelse\necho \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9B6B839221F2F65200554D2D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9B6B839C21F2F65200554D2D /* ViewController.swift in Sources */,
+				9B6B83C021F3076100554D2D /* UIView+Xib.swift in Sources */,
+				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
 				9B6B839A21F2F65200554D2D /* AppDelegate.swift in Sources */,
+				9B6B83BC21F3037600554D2D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +292,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		9B6B83B521F301C700554D2D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B6B83B421F301C700554D2D /* en */,
+				9B6B83B621F301DA00554D2D /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -166,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -227,6 +370,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -282,17 +426,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C9Z8X7D82Y;
-				INFOPLIST_FILE = starWars_arcsinus/Info.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/starWars_arcsinus/Sources/Configs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vignatiev.starWars-arcsinus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -300,17 +446,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C9Z8X7D82Y;
-				INFOPLIST_FILE = starWars_arcsinus/Info.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/starWars_arcsinus/Sources/Configs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vignatiev.starWars-arcsinus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
