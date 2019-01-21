@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bqu-3X-jqJ">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bqu-3X-jqJ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="555"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dBM-Ar-N8m">
                                     <size key="itemSize" width="50" height="50"/>
@@ -34,16 +34,19 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="dJJ-Fh-Jqd">
-                                <rect key="frame" x="0.0" y="600" width="375" height="37"/>
+                                <rect key="frame" x="0.0" y="619" width="375" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="qzN-gU-Rpc"/>
+                                </constraints>
                                 <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" red="1" green="0.26022542120905889" blue="0.48901659718754287" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gK6-la-P7M" firstAttribute="bottom" secondItem="Bqu-3X-jqJ" secondAttribute="bottom" id="KwP-Wn-jeP"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" secondItem="Bqu-3X-jqJ" secondAttribute="trailing" id="MBl-UV-2p3"/>
-                            <constraint firstItem="gK6-la-P7M" firstAttribute="bottom" secondItem="dJJ-Fh-Jqd" secondAttribute="bottom" constant="30" id="P4h-rx-YW9"/>
+                            <constraint firstItem="gK6-la-P7M" firstAttribute="bottom" secondItem="dJJ-Fh-Jqd" secondAttribute="bottom" constant="24" id="P4h-rx-YW9"/>
+                            <constraint firstItem="dJJ-Fh-Jqd" firstAttribute="top" secondItem="Bqu-3X-jqJ" secondAttribute="bottom" id="S0J-Xb-zjk"/>
                             <constraint firstItem="Bqu-3X-jqJ" firstAttribute="top" secondItem="gK6-la-P7M" secondAttribute="top" id="VV0-Cs-bb9"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" secondItem="dJJ-Fh-Jqd" secondAttribute="trailing" id="aEg-WY-JBa"/>
                             <constraint firstItem="dJJ-Fh-Jqd" firstAttribute="leading" secondItem="gK6-la-P7M" secondAttribute="leading" id="en3-vZ-7Nx"/>

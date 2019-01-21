@@ -75,6 +75,8 @@ extension PersonsSearchViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: PersonCollectionViewCell = collectionView.dequeueCollectionCell(forIndexPath: indexPath)
+    let person = persons[indexPath.row]
+    cell.configureWith(person)
     return cell
   }
   
@@ -95,7 +97,7 @@ extension PersonsSearchViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: collectionView.frame.height / 2)
+    return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
   }
   
   func collectionView(_ collectionView: UICollectionView,

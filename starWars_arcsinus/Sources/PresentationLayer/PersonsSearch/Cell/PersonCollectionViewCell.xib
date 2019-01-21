@@ -12,16 +12,59 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonCollectionViewCell" id="gTV-IL-0wX" customClass="PersonCollectionViewCell" customModule="starWars_arcsinus" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonCollectionViewCell" id="gTV-IL-0wX" customClass="PersonCollectionViewCell" customModule="starWars_arcsinus" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cMp-3Y-IkN">
+                        <rect key="frame" x="24" y="24" width="202" height="268"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ri0-nx-oEH">
+                                <rect key="frame" x="0.0" y="197" width="202" height="71"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jabba Desilijic Tiure" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vS3-FB-gks">
+                                        <rect key="frame" x="16" y="8" width="178" height="55"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="23"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.6380600869696611" green="1" blue="0.94504405019678939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="vS3-FB-gks" secondAttribute="trailing" constant="8" id="7C6-Lr-cmG"/>
+                                    <constraint firstItem="vS3-FB-gks" firstAttribute="top" secondItem="ri0-nx-oEH" secondAttribute="top" priority="750" constant="8" id="DOk-lV-8l0"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="H8a-ne-aS2"/>
+                                    <constraint firstItem="vS3-FB-gks" firstAttribute="leading" secondItem="ri0-nx-oEH" secondAttribute="leading" constant="16" id="Q9h-Bo-B6R"/>
+                                    <constraint firstAttribute="bottom" secondItem="vS3-FB-gks" secondAttribute="bottom" priority="750" constant="8" id="Ur6-Bf-EdT"/>
+                                    <constraint firstItem="vS3-FB-gks" firstAttribute="centerY" secondItem="ri0-nx-oEH" secondAttribute="centerY" id="lqP-QZ-mAL"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95646373042242527" green="0.72658196637953165" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ri0-nx-oEH" secondAttribute="trailing" id="VjU-Re-rX2"/>
+                            <constraint firstItem="ri0-nx-oEH" firstAttribute="leading" secondItem="cMp-3Y-IkN" secondAttribute="leading" id="bwB-5I-P49"/>
+                            <constraint firstAttribute="bottom" secondItem="ri0-nx-oEH" secondAttribute="bottom" id="bx0-Zi-MPt"/>
+                        </constraints>
+                    </view>
+                </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cMp-3Y-IkN" secondAttribute="trailing" constant="24" id="FWG-GZ-7wd"/>
+                <constraint firstItem="cMp-3Y-IkN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="24" id="Jr1-5M-e44"/>
+                <constraint firstAttribute="bottom" secondItem="cMp-3Y-IkN" secondAttribute="bottom" constant="8" id="pPb-BD-Jxd"/>
+                <constraint firstItem="cMp-3Y-IkN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="24" id="uml-Ow-cJk"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="250" height="279"/>
+            <connections>
+                <outlet property="containerView" destination="cMp-3Y-IkN" id="NfP-xN-eb9"/>
+                <outlet property="nameLabel" destination="vS3-FB-gks" id="Cwb-Bw-Lob"/>
+            </connections>
             <point key="canvasLocation" x="-206.40000000000001" y="-21.139430284857571"/>
         </collectionViewCell>
     </objects>

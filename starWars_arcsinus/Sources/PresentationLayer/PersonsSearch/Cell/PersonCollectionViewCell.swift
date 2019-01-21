@@ -10,9 +10,26 @@ import UIKit
 
 final class PersonCollectionViewCell: UICollectionViewCell {
   
+  @IBOutlet private var nameLabel: UILabel!
+  @IBOutlet private var containerView: UIView!
+  
   override func awakeFromNib() {
     super.awakeFromNib()
-    backgroundColor = .purple
+    configureUI()
+  }
+  
+  func configureWith(_ person: PersonsSearchViewModel.PersonViewModel) {
+    nameLabel.text = person.name
+  }
+  
+  private func configureUI() {
+    containerView.layer.cornerRadius = 30
+    containerView.layer.masksToBounds = true
+    
+    nameLabel.numberOfLines = 0
+    nameLabel.textColor = .black
+    nameLabel.textAlignment = .left
+    nameLabel.font = UIFont.systemFont(ofSize: 23, weight: .heavy)
   }
   
 }
