@@ -40,6 +40,8 @@
 		9B892AA521F6196E00A3B58B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6B83C921F315DB00554D2D /* RxCocoa.framework */; };
 		9B892AA621F6196E00A3B58B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6B83C521F315DA00554D2D /* RxSwift.framework */; };
 		9B892AA821F6208200A3B58B /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892AA721F6208200A3B58B /* UserEntity.swift */; };
+		9B892AAB21F64E8800A3B58B /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892AAA21F64E8800A3B58B /* SearchService.swift */; };
+		9B90C2D121F65C03007EB8D7 /* GenericResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B90C2D021F65C03007EB8D7 /* GenericResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,8 @@
 		9B892A9C21F6193300A3B58B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		9B892A9E21F6194400A3B58B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		9B892AA721F6208200A3B58B /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		9B892AAA21F64E8800A3B58B /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		9B90C2D021F65C03007EB8D7 /* GenericResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,7 @@
 				9B6B83BE21F3071E00554D2D /* Extensions */,
 				9B892A8421F610E000A3B58B /* Helpers */,
 				9B892A8E21F6122700A3B58B /* Models */,
+				9B892AA921F64DFE00A3B58B /* NetworkLayer */,
 				9B892A7221F5EE8300A3B58B /* ViewModelType.swift */,
 				9B892A8021F6025A00A3B58B /* PersonsLocalStorage.swift */,
 			);
@@ -273,6 +278,7 @@
 			children = (
 				9B6B839B21F2F65200554D2D /* PersonsSearchViewController.swift */,
 				9B892A8221F603E500A3B58B /* PersonsSearchViewModel.swift */,
+				9B892A8F21F6126700A3B58B /* PersonsSearchModel.swift */,
 				9B892A7F21F5F48000A3B58B /* Cell */,
 			);
 			path = PersonsSearch;
@@ -327,10 +333,18 @@
 			isa = PBXGroup;
 			children = (
 				9B6B83C221F311D300554D2D /* Person.swift */,
-				9B892A8F21F6126700A3B58B /* PersonsSearchModel.swift */,
 				9B892AA721F6208200A3B58B /* UserEntity.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9B892AA921F64DFE00A3B58B /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				9B892AAA21F64E8800A3B58B /* SearchService.swift */,
+				9B90C2D021F65C03007EB8D7 /* GenericResult.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,6 +482,7 @@
 				9B6B83C021F3076100554D2D /* UIView+Xib.swift in Sources */,
 				9B892A7D21F5F47B00A3B58B /* PersonCollectionViewCell.swift in Sources */,
 				9B892A9021F6126700A3B58B /* PersonsSearchModel.swift in Sources */,
+				9B90C2D121F65C03007EB8D7 /* GenericResult.swift in Sources */,
 				9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */,
 				9B892AA821F6208200A3B58B /* UserEntity.swift in Sources */,
 				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
@@ -479,6 +494,7 @@
 				9B892A8B21F6119800A3B58B /* Realm+WriteFunctions.swift in Sources */,
 				9B892A8921F6115D00A3B58B /* RealmController.swift in Sources */,
 				9B6B839A21F2F65200554D2D /* AppDelegate.swift in Sources */,
+				9B892AAB21F64E8800A3B58B /* SearchService.swift in Sources */,
 				9B6B83BC21F3037600554D2D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

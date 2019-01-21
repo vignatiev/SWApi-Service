@@ -56,7 +56,7 @@ extension PersonsSearchViewModel {
     
     let name: String
     let height: Int
-    let mass: Int
+    let mass: String
     let hairColor: String
     let skinColor: String
     let eyeColor: String

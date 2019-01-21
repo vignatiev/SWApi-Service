@@ -28,7 +28,7 @@ final class PersonsSearchViewController: UIViewController {
     
     navigationItem.titleView = searchBar
     collectionView.register(PersonCollectionViewCell.self)
-    pageControl.numberOfPages = 3
+    collectionView.delaysContentTouches = false
     configureWith(viewModel: PersonsSearchViewModel(model: PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)))
   }
   
@@ -58,9 +58,19 @@ final class PersonsSearchViewController: UIViewController {
     
     output.persons.drive(onNext: { [weak self] persons in
       self?.persons = persons
+      self?.pageControl.numberOfPages = persons.count
       self?.collectionView.reloadData()
     })
       .disposed(by: disposeBag)
+  }
+  
+}
+
+extension PersonsSearchViewController {
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
+    pageControl.currentPage = currentPage
   }
   
 }
@@ -76,7 +86,7 @@ extension PersonsSearchViewController: UICollectionViewDataSource {
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: PersonCollectionViewCell = collectionView.dequeueCollectionCell(forIndexPath: indexPath)
     let person = persons[indexPath.row]
-    cell.configureWith(person)
+    cell.configureWith(viewModel: person)
     return cell
   }
   

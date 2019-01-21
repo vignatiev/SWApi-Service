@@ -54,8 +54,18 @@ final class PersonsSearchModel {
   }
   
   private func searchPersons(withName name: String) {
-    // network request
-    // persons.accept([Person])
+    
+    SearchService.shared.getInfoAboutPerson(withName: name) { result in
+      switch result {
+      case .failure(let error):
+        // FIXME
+        print(error.localizedDescription)
+        
+      case .success(let response):
+        self.persons.accept(response)
+      }
+    }
+    
   }
   
 }

@@ -6,4 +6,9 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
-
+struct Constants {
+  
+  /// https://swapi.co/
+  static let baseUrl = "https://swapi.co/"
+  
+}
