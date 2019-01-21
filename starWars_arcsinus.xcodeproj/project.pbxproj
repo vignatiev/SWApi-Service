@@ -30,6 +30,8 @@
 		9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A7721F5F1EA00A3B58B /* UITableView+Register.swift */; };
 		9B892A7D21F5F47B00A3B58B /* PersonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A7B21F5F47B00A3B58B /* PersonCollectionViewCell.swift */; };
 		9B892A7E21F5F47B00A3B58B /* PersonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B892A7C21F5F47B00A3B58B /* PersonCollectionViewCell.xib */; };
+		9B892A8121F6025A00A3B58B /* PersonsLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A8021F6025A00A3B58B /* PersonsLocalStorage.swift */; };
+		9B892A8321F603E500A3B58B /* PersonsSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A8221F603E500A3B58B /* PersonsSearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		9B892A7721F5F1EA00A3B58B /* UITableView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
 		9B892A7B21F5F47B00A3B58B /* PersonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCollectionViewCell.swift; sourceTree = "<group>"; };
 		9B892A7C21F5F47B00A3B58B /* PersonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonCollectionViewCell.xib; sourceTree = "<group>"; };
+		9B892A8021F6025A00A3B58B /* PersonsLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsLocalStorage.swift; sourceTree = "<group>"; };
+		9B892A8221F603E500A3B58B /* PersonsSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsSearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,8 @@
 				9B6B83BE21F3071E00554D2D /* Extensions */,
 				9B6B83C221F311D300554D2D /* Person.swift */,
 				9B892A7221F5EE8300A3B58B /* ViewModelType.swift */,
+				9B892A8021F6025A00A3B58B /* PersonsLocalStorage.swift */,
+				9B892A8221F603E500A3B58B /* PersonsSearchViewModel.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -401,11 +407,13 @@
 				9B892A6B21F5EC1600A3B58B /* Array+UnsafeIndex.swift in Sources */,
 				9B6B839C21F2F65200554D2D /* PersonsSearchViewController.swift in Sources */,
 				9B892A6721F5EB8100A3B58B /* Collection+IsNotEmpty.swift in Sources */,
+				9B892A8321F603E500A3B58B /* PersonsSearchViewModel.swift in Sources */,
 				9B892A6421F5EB3700A3B58B /* UIView+AllNestedViews.swift in Sources */,
 				9B6B83C021F3076100554D2D /* UIView+Xib.swift in Sources */,
 				9B892A7D21F5F47B00A3B58B /* PersonCollectionViewCell.swift in Sources */,
 				9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */,
 				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
+				9B892A8121F6025A00A3B58B /* PersonsLocalStorage.swift in Sources */,
 				9B892A6E21F5EC6B00A3B58B /* ObjectMapper+Map.swift in Sources */,
 				9B6B83C321F311D300554D2D /* Person.swift in Sources */,
 				9B892A7321F5EE8300A3B58B /* ViewModelType.swift in Sources */,
