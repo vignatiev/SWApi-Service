@@ -15,6 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    RealmController.shared.setup()
+    if CurrentUser == nil {
+      mainRealm.realmWrite {
+        UserPreferencesEntity.value.updateUser(currentUser: UserEntity.initStartUser())
+      }
+    }
+    
     return true
   }
   

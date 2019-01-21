@@ -1,5 +1,5 @@
 //
-//  PersonsSearchViewModel.swift
+//  PersonsSearchModel.swift
 //  starWars_arcsinus
 //
 //  Created by Владислав Игнатьев on 21.01.2019.
@@ -8,42 +8,6 @@
 
 import RxSwift
 import RxCocoa
-
-protocol PersonsSearchModuleOutput {
-  var showPersonDetails: Signal<Person> { get }
-}
-
-final class PersonsSearchViewModel: ViewModelType {
-  
-  private let model: PersonsSearchModel
-  
-  init(mode: PersonsSearchModel) {
-    self.model = mode
-  }
-  
-  func transform(input: Input) -> Output {
-    return Output()
-  }
-  
-  struct Input {
-  }
-  
-  struct Output {
-  }
-  
-}
-
-extension PersonsSearchViewModel {
-  
-  struct PersonViewModel {
-    
-    init(person: Person) {
-      
-    }
-    
-  }
-  
-}
 
 final class PersonsSearchModel {
   
@@ -82,8 +46,9 @@ final class PersonsSearchModel {
       .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
       .filter { $0.isNotEmpty }
       .distinctUntilChanged()
+      .debounce(0.35, scheduler: scheduler)
       .subscribe(onNext: { [weak self] text in
-        // search persons in web
+        self?.searchPersons(withName: text)
       })
       .disposed(by: disposeBag)
   }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class PersonsSearchViewController: UIViewController {
   
@@ -14,12 +16,20 @@ final class PersonsSearchViewController: UIViewController {
   @IBOutlet private var searchBar: UISearchBar!
   @IBOutlet private var pageControl: UIPageControl!
   
+  private var viewModel: AnyObject?
+  
+  private let didSelectPerson = PublishRelay<Int>()
+  private let disposeBag = DisposeBag()
+  
+  private var persons: [PersonsSearchViewModel.PersonViewModel] = []
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     navigationItem.titleView = searchBar
     collectionView.register(PersonCollectionViewCell.self)
-    pageControl.numberOfPages = 7
+    pageControl.numberOfPages = 3
+    configureWith(viewModel: PersonsSearchViewModel(model: PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)))
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -38,13 +48,28 @@ final class PersonsSearchViewController: UIViewController {
     searchBar.resignFirstResponder()
   }
   
+  func configureWith(viewModel: PersonsSearchViewModel) {
+    self.viewModel = viewModel
+    
+    let searchText = searchBar.rx.text.asObservable().filterNil()
+    let input = PersonsSearchViewModel.Input(searchText: searchText,
+                                             itemWasSelected: didSelectPerson.asObservable())
+    let output = viewModel.transform(input: input)
+    
+    output.persons.drive(onNext: { [weak self] persons in
+      self?.persons = persons
+      self?.collectionView.reloadData()
+    })
+      .disposed(by: disposeBag)
+  }
+  
 }
 
 // MARK: - UICollectionViewDataSource
 extension PersonsSearchViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 7
+    return persons.count
   }
   
   func collectionView(_ collectionView: UICollectionView,
@@ -57,6 +82,10 @@ extension PersonsSearchViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension PersonsSearchViewController: UICollectionViewDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    didSelectPerson.accept(indexPath.row)
+  }
   
 }
 
