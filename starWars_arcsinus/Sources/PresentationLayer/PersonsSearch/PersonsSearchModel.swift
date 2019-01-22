@@ -55,11 +55,18 @@ final class PersonsSearchModel {
   
   private func searchPersons(withName name: String) {
     
-    SearchService.shared.getInfoAboutPerson(withName: name) { result in
+    SearchService.shared.getInfoAboutPerson(withName: name) { [weak self] result in
+      guard let self = self else {
+        return
+      }
       switch result {
       case .failure(let error):
-        // FIXME
-        print(error.localizedDescription)
+        // FIXME: add error handler
+        
+        switch error {
+        case .clientError: break
+        default: break
+        }
         
       case .success(let response):
         self.persons.accept(response)

@@ -36,7 +36,7 @@ final class SearchService {
                           completion: @escaping(GenericResult<[Person], ApiError>) -> Void) {
     
     guard let url = makeUrl(withPath: SearchResource.people) else {
-      let error = ApiError.clientError
+      let error = ApiError.clientError(underlyingError: Errors.invalidUrl)
       DispatchQueue.main.async {
         completion(GenericResult.failure(error))
       }
@@ -46,7 +46,10 @@ final class SearchService {
     
     AF.request(url, method: .get, parameters: parameters)
       .validate(statusCode: 200..<300)
-      .responseJSON { response in
+      .responseJSON { [weak self] response in
+        guard let self = self else {
+          return
+        }
         
         let result: GenericResult<[Person], ApiError>
         
@@ -57,13 +60,12 @@ final class SearchService {
           }
           let persons = searchResponse.persons
           result = GenericResult.success(persons)
-          completion(result)
           
-        case .failure(_):
-          // FIXME
-          result = GenericResult.failure(ApiError.clientError)
-          completion(result)
+        case .failure(let error):
+          // FIXME: handle all errors
+          result = self.responseFailureResult(response: response, error: error)
         }
+        completion(result)
     }
     
   }
@@ -73,8 +75,40 @@ final class SearchService {
     return URL(string: urlString)
   }
   
+  private func responseFailureResult<A>(response: DataResponse<Any>, error: Error) -> GenericResult<A, ApiError> {
+    let apiError: ApiError
+    if let statusCode = response.response?.statusCode {
+      switch statusCode {
+      case 401, 403: apiError = .authorizationError
+      case 500...599: apiError = .serverError(underlyingError: error)
+      case 400...499: apiError = .clientError(underlyingError: error)
+      default:
+        // Другие http коды воспринимаем как serverError
+        apiError = .serverError(underlyingError: error)
+      }
+    } else {
+      let errorCode = error._code
+      switch errorCode {
+      case -1: apiError = .unknownError(underlyingError: error)
+      default: apiError = .networkError(underlyingError: error)
+      }
+    }
+    
+    return .failure(apiError)
+  }
+  
+  enum Errors: Error {
+    case invalidUrl
+  }
+  
 }
 
 enum ApiError: Error {
-  case clientError
+  case authorizationError // http коды 401, 403
+  case clientError(underlyingError: Error) // 400-е http коды
+  case serverError(underlyingError: Error) // 500-е http коды
+  
+  case networkError(underlyingError: Error)
+  case mappingError(underlyingError: Error)
+  case unknownError(underlyingError: Error?)
 }

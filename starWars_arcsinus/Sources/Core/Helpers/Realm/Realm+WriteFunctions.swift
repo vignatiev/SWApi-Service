@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 extension Realm {
+  
   public func realmWrite(_ block: (() -> Void)) {
     if isInWriteTransaction {
       block()
@@ -22,8 +23,5 @@ extension Realm {
       }
     }
   }
-}
-
-func realmWrite(realm: Realm = mainRealm, _ block: (() -> Void)) {
-  realm.realmWrite(block)
+  
 }

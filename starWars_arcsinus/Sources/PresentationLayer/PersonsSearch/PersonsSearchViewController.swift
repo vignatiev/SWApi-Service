@@ -40,7 +40,7 @@ final class PersonsSearchViewController: UIViewController {
     let subViews = searchBar.allNestedSubviews()
     for view in subViews {
       if let textField = view as? UITextField {
-        textField.backgroundColor = .gray
+        textField.backgroundColor = .lightGray
         textField.leftViewMode = .unlessEditing
         break
       }

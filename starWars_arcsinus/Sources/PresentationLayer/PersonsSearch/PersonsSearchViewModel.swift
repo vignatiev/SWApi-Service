@@ -54,24 +54,23 @@ extension PersonsSearchViewModel {
   
   struct PersonViewModel {
     
-    let name: String
-    let height: Int
-    let mass: String
-    let hairColor: String
-    let skinColor: String
-    let eyeColor: String
-    let birthYear: String
-    let gender: String
+    let name: Field
+    let height: Field
+    let mass: Field
+    let birthYear: Field
+    let gender: Field
     
     init(person: Person) {
-      self.name = person.name
-      self.height = person.height
-      self.mass = person.mass
-      self.hairColor = person.hairColor
-      self.skinColor = person.skinColor
-      self.eyeColor = person.eyeColor
-      self.birthYear = person.birthYear
-      self.gender = person.gender
+      self.name = Field(title: "Имя", value: person.name)
+      self.height = Field(title: "Рост", value: String(person.height))
+      self.mass = Field(title: "Вес", value: person.mass)
+      self.birthYear = Field(title: "Год рождения", value: person.birthYear)
+      self.gender = Field(title: "Пол", value: person.gender)
+    }
+    
+    struct Field {
+      let title: String
+      let value: String
     }
     
   }
