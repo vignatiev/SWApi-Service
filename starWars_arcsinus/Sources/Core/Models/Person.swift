@@ -50,6 +50,36 @@ extension Person: ImmutableMappable {
   
 }
 
+extension Person: Persistable {
+  
+  init(managedObject: PersonObject) {
+    name = managedObject.name
+    height = managedObject.height
+    mass = managedObject.mass
+    hairColor = managedObject.hairColor
+    eyeColor = managedObject.eyeColor
+    skinColor = managedObject.skinColor
+    birthYear = managedObject.birthYear
+    gender = managedObject.gender
+  }
+  
+  func managedObject() -> PersonObject {
+    let person = PersonObject()
+    
+    person.name = name
+    person.height = height
+    person.mass = mass
+    person.hairColor = hairColor
+    person.eyeColor = eyeColor
+    person.skinColor = skinColor
+    person.birthYear = birthYear
+    person.gender = gender
+    
+    return person
+  }
+  
+}
+
 struct SearchResponse: ImmutableMappable {
   
   let persons: [Person]

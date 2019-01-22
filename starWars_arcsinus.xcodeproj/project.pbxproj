@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B3A749D21F686B90071B628 /* PersonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A749C21F686B90071B628 /* PersonObject.swift */; };
+		9B3A749F21F6881C0071B628 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A749E21F6881B0071B628 /* Persistable.swift */; };
 		9B6B839A21F2F65200554D2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B839921F2F65200554D2D /* AppDelegate.swift */; };
 		9B6B839C21F2F65200554D2D /* PersonsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B839B21F2F65200554D2D /* PersonsSearchViewController.swift */; };
 		9B6B839F21F2F65200554D2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B839D21F2F65200554D2D /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B3A749C21F686B90071B628 /* PersonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonObject.swift; sourceTree = "<group>"; };
+		9B3A749E21F6881B0071B628 /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		9B6B839621F2F65200554D2D /* starWars_arcsinus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starWars_arcsinus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B6B839921F2F65200554D2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B6B839B21F2F65200554D2D /* PersonsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsSearchViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +323,7 @@
 				9B892A8621F6111000A3B58B /* Object+Singletone.swift */,
 				9B892A8A21F6119800A3B58B /* Realm+WriteFunctions.swift */,
 				9B892A8C21F611C200A3B58B /* Realm+Notifications.swift */,
+				9B3A749E21F6881B0071B628 /* Persistable.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				9B6B83C221F311D300554D2D /* Person.swift */,
+				9B3A749C21F686B90071B628 /* PersonObject.swift */,
 				9B892A8F21F6126700A3B58B /* PersonsSearchModel.swift */,
 				9B892AA721F6208200A3B58B /* UserEntity.swift */,
 			);
@@ -476,6 +482,8 @@
 				9B6B83C321F311D300554D2D /* Person.swift in Sources */,
 				9B892A7321F5EE8300A3B58B /* ViewModelType.swift in Sources */,
 				9B892A7121F5ECDD00A3B58B /* Rx+FilterNil.swift in Sources */,
+				9B3A749F21F6881C0071B628 /* Persistable.swift in Sources */,
+				9B3A749D21F686B90071B628 /* PersonObject.swift in Sources */,
 				9B892A8B21F6119800A3B58B /* Realm+WriteFunctions.swift in Sources */,
 				9B892A8921F6115D00A3B58B /* RealmController.swift in Sources */,
 				9B6B839A21F2F65200554D2D /* AppDelegate.swift in Sources */,

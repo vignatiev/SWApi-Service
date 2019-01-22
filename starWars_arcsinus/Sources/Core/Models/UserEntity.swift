@@ -12,11 +12,7 @@ import RealmSwift
 final class UserEntity: Object {
   
   @objc dynamic var firstLaunch = false
-//  let searchHistory = List<Person>()
-  
-//  override static func primaryKey() -> String? {
-//    return "id"
-//  }
+  let searchHistory = List<PersonObject>()
   
   static func initStartUser() -> UserEntity {
     return UserEntity()
