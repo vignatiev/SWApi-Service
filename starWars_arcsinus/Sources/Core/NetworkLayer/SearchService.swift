@@ -28,23 +28,21 @@ final class SearchService {
       }
       return "api/" + suffix
     }
+    
   }
   
   private init() { }
   
   func getInfoAboutPerson(withName name: String,
-                          completion: @escaping(GenericResult<[Person], ApiError>) -> Void) {
-    
-    guard let url = makeUrl(withPath: SearchResource.people) else {
-      let error = ApiError.clientError(underlyingError: Errors.invalidUrl)
-      DispatchQueue.main.async {
-        completion(GenericResult.failure(error))
-      }
-      return
-    }
+                          completion: @escaping(GenericResult<[Person], ApiError>) -> Void) -> DataRequest {
+    let url = makeUrl(withPath: SearchResource.people)!
     let parameters: Parameters = ["search": name]
     
-    AF.request(url, method: .get, parameters: parameters)
+    let sessionManager = Alamofire.Session.default
+    sessionManager.sessionConfiguration.timeoutIntervalForRequest = 10
+    sessionManager.sessionConfiguration.timeoutIntervalForResource = 10
+    
+    let request = sessionManager.request(url, method: .get, parameters: parameters)
       .validate(statusCode: 200..<300)
       .responseJSON { [weak self] response in
         guard let self = self else {
@@ -68,9 +66,10 @@ final class SearchService {
         completion(result)
     }
     
+    return request
   }
   
-  private func makeUrl(withPath path: SearchResource) -> URL? {
+  func makeUrl(withPath path: SearchResource) -> URL? {
     let urlString = Constants.baseUrl + path.value
     return URL(string: urlString)
   }
@@ -103,7 +102,8 @@ final class SearchService {
   
 }
 
-enum ApiError: Error {
+enum ApiError: Error, LocalizedError {
+  
   case authorizationError // http коды 401, 403
   case clientError(underlyingError: Error) // 400-е http коды
   case serverError(underlyingError: Error) // 500-е http коды
@@ -111,4 +111,16 @@ enum ApiError: Error {
   case networkError(underlyingError: Error)
   case mappingError(underlyingError: Error)
   case unknownError(underlyingError: Error?)
+  
+  var errorDescription: String? {
+    switch self {
+    case .clientError: return "Произошла ошибка при обращении к серверу"
+    case .authorizationError: return "Произошла ошибка авторизации"
+    case .mappingError: return "Произошла ошибка при оьработке данных, полученных от сервера"
+    case .serverError: return "Во время выполнения запроса произошла ошибка сервера"
+    case .networkError: return "Нет соединения с интернетом или очень низкая скорость подключения"
+    case .unknownError: return "Произошла неизвестная ошибка сети"
+    }
+  }
+  
 }

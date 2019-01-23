@@ -12,6 +12,8 @@ import RxCocoa
 final class PersonsSearchModel {
   
   private let personsStorage: PersonsLocalStorage
+  private let searchService = SearchService.shared
+  
   private let disposeBag = DisposeBag()
   
   // Input
@@ -19,6 +21,7 @@ final class PersonsSearchModel {
   
   // Output
   let persons = BehaviorRelay<[Person]>(value: [])
+  let networkError = PublishRelay<ApiError>()
   
   init(personsStorage: PersonsLocalStorage) {
     self.personsStorage = personsStorage
@@ -27,52 +30,61 @@ final class PersonsSearchModel {
   }
   
   private func configureBindings() {
-    let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+    let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
-    // Загружаем из локального хранилища
-    searchText
+    let invalidText = searchText
       .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
       .filter { $0.isEmpty }
+    
+    let validText = searchText
+      .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+      .filter { $0.isNotEmpty }
+      .distinctUntilChanged()
+    
+    // Загружаем из локального хранилища
+    invalidText
       .subscribe(onNext: { [weak self] _ in
-        guard let self = self else {
-          return
-        }
+        guard let self = self else { return }
         self.persons.accept(Array(self.personsStorage.getAllPersons()))
       })
       .disposed(by: disposeBag)
     
     // Загружаем из сети
-    searchText
-      .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-      .filter { $0.isNotEmpty }
-      .distinctUntilChanged()
-      .debounce(0.35, scheduler: scheduler)
-      .subscribe(onNext: { [weak self] text in
-        self?.searchPersons(withName: text)
-      })
-      .disposed(by: disposeBag)
+    validText
+      .debounce(0.25, scheduler: backgroundScheduler)
+      .flatMapLatest { [unowned self] text -> Single<GenericResult<[Person], ApiError>> in
+        // Отправляем новый запрос и отменяем предыдущий
+        return self.searchForPersons(withName: text)
+      }.subscribe(onNext: { [weak self] result in
+        self?.processPersonsSearchResult(result)
+      }).disposed(by: disposeBag)
   }
   
-  private func searchPersons(withName name: String) {
-    
-    SearchService.shared.getInfoAboutPerson(withName: name) { [weak self] result in
-      guard let self = self else {
-        return
-      }
-      switch result {
-      case .failure(let error):
-        // FIXME: add error handler
-        
-        switch error {
-        case .clientError: break
-        default: break
-        }
-        
-      case .success(let response):
-        self.persons.accept(response)
-      }
+  private func processPersonsSearchResult(_ result: ApiSearchResult) {
+    switch result {
+    case .failure(let error): networkError.accept(error)
+    case .success(let persons): self.persons.accept(persons)
     }
-    
   }
   
 }
+
+extension PersonsSearchModel {
+  
+  private typealias ApiSearchResult = GenericResult<[Person], ApiError>
+  
+  private func searchForPersons(withName name: String) -> Single<ApiSearchResult> {
+    // This Signal produces only .onNext events
+    return Single.create(subscribe: { [unowned self] single in
+      let request = self.searchService.getInfoAboutPerson(withName: name) { result in
+        single(.success(result))
+      }
+      
+      return Disposables.create {
+        request.cancel()
+      }
+    })
+  }
+  
+}
+

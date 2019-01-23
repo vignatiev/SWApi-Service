@@ -43,7 +43,7 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureUI()
+    initialSetup()
   }
   
   func configureWith(viewModel: PersonsSearchViewModel.PersonViewModel) {
@@ -62,7 +62,7 @@ final class PersonCollectionViewCell: UICollectionViewCell {
     birthYearLabel.text = "\(birthYear.title): \(birthYear.value)"
   }
   
-  private func configureUI() {
+  private func initialSetup() {
     containerView.layer.cornerRadius = 30
     containerView.layer.masksToBounds = true
     

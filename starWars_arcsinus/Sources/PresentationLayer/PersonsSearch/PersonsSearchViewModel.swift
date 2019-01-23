@@ -9,19 +9,26 @@
 import RxSwift
 import RxCocoa
 
-protocol PersonsSearchModuleOutput {
+protocol PersonsSearchModuleOutput: AnyObject {
   var showPersonDetails: Signal<Person> { get }
 }
 
-final class PersonsSearchViewModel: ViewModelType {
+final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
   
   private let model: PersonsSearchModel
   private let disposeBag = DisposeBag()
   
+  // PersonsSearchModuleOutput Properties
+  let showPersonDetails: Signal<Person>
+  private let _showPersonDetails = PublishRelay<Person>()
+  
   init(model: PersonsSearchModel) {
     self.model = model
+    
+    showPersonDetails = _showPersonDetails.asSignal()
   }
   
+  // MARK: ViewModelType Impl
   func transform(input: Input) -> Output {
     input.searchText
       .bind(to: model.searchText)
@@ -31,12 +38,17 @@ final class PersonsSearchViewModel: ViewModelType {
       $0.map { PersonViewModel(person: $0) }
     }
     
+    let networkErrorOutput = model.networkError.asSignal().map { $0.localizedDescription }
+    
     let selectedPerson = input.itemWasSelected
       .withLatestFrom(model.persons) { index, persons -> Person? in
         return persons[unsafeIndex: index]
       }.filterNil()
     
-    return Output(persons: personsOutput)
+    selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
+    
+    return Output(persons: personsOutput,
+                  showNetworkError: networkErrorOutput)
   }
   
   struct Input {
@@ -46,6 +58,7 @@ final class PersonsSearchViewModel: ViewModelType {
   
   struct Output {
     let persons: Driver<[PersonViewModel]>
+    let showNetworkError: Signal<String>
   }
   
 }
@@ -76,3 +89,4 @@ extension PersonsSearchViewModel {
   }
   
 }
+
