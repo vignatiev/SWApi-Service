@@ -20,4 +20,15 @@ final class PersonObject: Object {
   @objc dynamic var birthYear: String = ""
   @objc dynamic var gender: String = ""
   
+  func update(with newObject: PersonObject) {
+    name = newObject.name
+    height = newObject.height
+    mass = newObject.mass
+    hairColor = newObject.hairColor
+    skinColor = newObject.skinColor
+    eyeColor = newObject.eyeColor
+    birthYear = newObject.birthYear
+    gender = newObject.gender
+  }
+  
 }

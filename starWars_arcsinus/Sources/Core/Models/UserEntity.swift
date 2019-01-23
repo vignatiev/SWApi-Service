@@ -11,7 +11,6 @@ import RealmSwift
 
 final class UserEntity: Object {
   
-  @objc dynamic var firstLaunch = false
   let searchHistory = List<PersonObject>()
   
   static func initStartUser() -> UserEntity {
