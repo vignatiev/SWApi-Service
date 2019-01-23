@@ -12,14 +12,14 @@ struct Person: Hashable {
   
   let name: String
   let height: Int
-  let mass: Int
+  let mass: String
   let hairColor: String
   let skinColor: String
   let eyeColor: String
   let birthYear: String
   let gender: String
   
-  init(name: String, height: Int, mass: Int,
+  init(name: String, height: Int, mass: String,
        hairColor: String, skinColor: String, eyeColor: String,
        birthYear: String, gender: String) {
     self.name = name
@@ -40,7 +40,7 @@ extension Person: ImmutableMappable {
   init(map: Map) throws {
     self.name = try map.stringIfNotEmpty("name")
     self.height = try map.intFromString("height")
-    self.mass = try map.intFromString("mass")
+    self.mass = try map.stringIfNotEmpty("mass")
     self.hairColor = try map.stringIfNotEmpty("hair_color")
     self.eyeColor = try map.stringIfNotEmpty("eye_color")
     self.skinColor = try map.stringIfNotEmpty("skin_color")
@@ -85,7 +85,7 @@ struct SearchResponse: ImmutableMappable {
   let persons: [Person]
   
   init(map: Map) throws {
-    persons = try map.compactMapArrayOrEmpty("persons")
+    persons = try map.compactMapArrayOrEmpty("results")
   }
   
 }

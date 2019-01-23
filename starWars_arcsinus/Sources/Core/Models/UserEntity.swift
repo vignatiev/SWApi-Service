@@ -30,4 +30,4 @@ final class UserPreferencesEntity: Object, ObjectSingletone {
   
 }
 
-var CurrentUser: UserEntity! = UserPreferencesEntity.value.currentUser
+var currentUser: UserEntity! = UserPreferencesEntity.shared.currentUser

@@ -9,11 +9,12 @@
 import RealmSwift
 import Foundation
 
-protocol ObjectSingletone: class {
+protocol ObjectSingletone: AnyObject {
 }
 
 extension ObjectSingletone where Self: Object {
-  static var value: Self {
+  
+  static var shared: Self {
     let object = mainRealm.objects(Self.self).first
     if let value = object {
       return value
@@ -27,4 +28,5 @@ extension ObjectSingletone where Self: Object {
       return value
     }
   }
+  
 }

@@ -9,19 +9,26 @@
 import RxSwift
 import RxCocoa
 
-protocol PersonsSearchModuleOutput {
+protocol PersonsSearchModuleOutput: AnyObject {
   var showPersonDetails: Signal<Person> { get }
 }
 
-final class PersonsSearchViewModel: ViewModelType {
+final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
   
   private let model: PersonsSearchModel
   private let disposeBag = DisposeBag()
   
+  // PersonsSearchModuleOutput Properties
+  let showPersonDetails: Signal<Person>
+  private let _showPersonDetails = PublishRelay<Person>()
+  
   init(model: PersonsSearchModel) {
     self.model = model
+    
+    showPersonDetails = _showPersonDetails.asSignal()
   }
   
+  // MARK: ViewModelType Impl
   func transform(input: Input) -> Output {
     input.searchText
       .bind(to: model.searchText)
@@ -31,12 +38,17 @@ final class PersonsSearchViewModel: ViewModelType {
       $0.map { PersonViewModel(person: $0) }
     }
     
+    let networkErrorOutput = model.networkError.asSignal().map { $0.localizedDescription }
+    
     let selectedPerson = input.itemWasSelected
       .withLatestFrom(model.persons) { index, persons -> Person? in
         return persons[unsafeIndex: index]
       }.filterNil()
     
-    return Output(persons: personsOutput)
+    selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
+    
+    return Output(persons: personsOutput,
+                  showNetworkError: networkErrorOutput)
   }
   
   struct Input {
@@ -46,6 +58,7 @@ final class PersonsSearchViewModel: ViewModelType {
   
   struct Output {
     let persons: Driver<[PersonViewModel]>
+    let showNetworkError: Signal<String>
   }
   
 }
@@ -54,26 +67,26 @@ extension PersonsSearchViewModel {
   
   struct PersonViewModel {
     
-    let name: String
-    let height: Int
-    let mass: Int
-    let hairColor: String
-    let skinColor: String
-    let eyeColor: String
-    let birthYear: String
-    let gender: String
+    let name: Field
+    let height: Field
+    let mass: Field
+    let birthYear: Field
+    let gender: Field
     
     init(person: Person) {
-      self.name = person.name
-      self.height = person.height
-      self.mass = person.mass
-      self.hairColor = person.hairColor
-      self.skinColor = person.skinColor
-      self.eyeColor = person.eyeColor
-      self.birthYear = person.birthYear
-      self.gender = person.gender
+      self.name = Field(title: "Имя", value: person.name)
+      self.height = Field(title: "Рост", value: String(person.height))
+      self.mass = Field(title: "Вес", value: person.mass)
+      self.birthYear = Field(title: "Год рождения", value: person.birthYear)
+      self.gender = Field(title: "Пол", value: person.gender)
+    }
+    
+    struct Field {
+      let title: String
+      let value: String
     }
     
   }
   
 }
+

@@ -28,19 +28,33 @@ final class PersonsSearchViewController: UIViewController {
     
     navigationItem.titleView = searchBar
     collectionView.register(PersonCollectionViewCell.self)
-    pageControl.numberOfPages = 3
-    configureWith(viewModel: PersonsSearchViewModel(model: PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)))
+    collectionView.delaysContentTouches = false
+    
+    let model = PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)
+    let viewModel = PersonsSearchViewModel(model: model)
+    configureWith(viewModel: viewModel)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
+    setupAppearance(of: searchBar)
+  }
+  
+  func configureWith(viewModel: PersonsSearchViewModel) {
+    self.viewModel = viewModel
+    
+    bindViewWith(viewModel: viewModel)
+    bindWith(moduleOutput: viewModel)
+  }
+  
+  private func setupAppearance(of searchBar: UISearchBar) {
     searchBar.sizeToFit()
     searchBar.becomeFirstResponder()
     let subViews = searchBar.allNestedSubviews()
     for view in subViews {
       if let textField = view as? UITextField {
-        textField.backgroundColor = .gray
+        textField.backgroundColor = .lightGray
         textField.leftViewMode = .unlessEditing
         break
       }
@@ -48,19 +62,43 @@ final class PersonsSearchViewController: UIViewController {
     searchBar.resignFirstResponder()
   }
   
-  func configureWith(viewModel: PersonsSearchViewModel) {
-    self.viewModel = viewModel
-    
-    let searchText = searchBar.rx.text.asObservable().filterNil()
-    let input = PersonsSearchViewModel.Input(searchText: searchText,
-                                             itemWasSelected: didSelectPerson.asObservable())
-    let output = viewModel.transform(input: input)
-    
-    output.persons.drive(onNext: { [weak self] persons in
-      self?.persons = persons
-      self?.collectionView.reloadData()
-    })
-      .disposed(by: disposeBag)
+  private func bindViewWith<V>(viewModel: V)
+    where V: ViewModelType, V.Input == PersonsSearchViewModel.Input, V.Output == PersonsSearchViewModel.Output {
+      
+      let searchText = searchBar.rx.text.asObservable().filterNil()
+      let input = PersonsSearchViewModel.Input(searchText: searchText,
+                                               itemWasSelected: didSelectPerson.asObservable())
+      let output = viewModel.transform(input: input)
+      
+      output.persons
+        .drive(onNext: { [weak self] persons in
+          self?.persons = persons
+          self?.pageControl.numberOfPages = persons.count
+          self?.collectionView.reloadData()
+        })
+        .disposed(by: disposeBag)
+      
+      output.showNetworkError.emit(onNext: { message in
+        // FIXME: show error
+      }).disposed(by: disposeBag)
+  }
+  
+  private func bindWith(moduleOutput: PersonsSearchModuleOutput) {
+    // Биндинги для контроллера
+    moduleOutput.showPersonDetails.emit(onNext: { person in
+      // FIXME: Implement
+      // let personDetailsViewController
+      // present(personDetailsViewController, animated: true, completion: nil)
+    }).disposed(by: disposeBag)
+  }
+  
+}
+
+extension PersonsSearchViewController {
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
+    pageControl.currentPage = currentPage
   }
   
 }
@@ -76,7 +114,7 @@ extension PersonsSearchViewController: UICollectionViewDataSource {
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: PersonCollectionViewCell = collectionView.dequeueCollectionCell(forIndexPath: indexPath)
     let person = persons[indexPath.row]
-    cell.configureWith(person)
+    cell.configureWith(viewModel: person)
     return cell
   }
   

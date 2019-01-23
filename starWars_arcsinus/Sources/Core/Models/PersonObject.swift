@@ -13,7 +13,7 @@ final class PersonObject: Object {
   
   @objc dynamic var name: String = ""
   @objc dynamic var height: Int = 0
-  @objc dynamic var mass: Int = 0
+  @objc dynamic var mass: String = ""
   @objc dynamic var hairColor: String = ""
   @objc dynamic var skinColor: String = ""
   @objc dynamic var eyeColor: String = ""

@@ -11,7 +11,7 @@ import RealmSwift
 
 var mainRealm: Realm!
 
-class RealmController {
+final class RealmController {
   
   static var shared = RealmController()
   

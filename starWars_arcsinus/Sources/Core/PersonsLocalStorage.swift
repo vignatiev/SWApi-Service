@@ -23,25 +23,25 @@ final class PersonsLocalStorage {
   }
   
   func getAllPersons() -> Set<Person> {
-    let persons: Set<Person> = [Person(name: "Darth Vader", height: 202, mass: 136,
+    let persons: Set<Person> = [Person(name: "Darth Vader", height: 202, mass: "136",
                                        hairColor: "none", skinColor: "white", eyeColor: "yellow",
                                        birthYear: "19fj", gender: "male"),
-                                Person(name: "Luke Skywalker", height: 184, mass: 80,
+                                Person(name: "Luke Skywalker", height: 184, mass: "80",
                                        hairColor: "light", skinColor: "white", eyeColor: "green",
                                        birthYear: "1fk9", gender: "male"),
-                                Person(name: "C-3PO", height: 167, mass: 75,
+                                Person(name: "C-3PO", height: 167, mass: "75",
                                        hairColor: "n/a", skinColor: "gold", eyeColor: "yellow",
                                        birthYear: "112bb6", gender: "n/a"),
-                                Person(name: "R2-D2", height: 96, mass: 32,
+                                Person(name: "R2-D2", height: 96, mass: "32",
                                        hairColor: "n/a", skinColor: "white, blue", eyeColor: "red",
                                        birthYear: "33by", gender: "n/a"),
-                                Person(name: "Leia Organa", height: 150, mass: 49,
+                                Person(name: "Leia Organa", height: 150, mass: "49",
                                        hairColor: "brwon", skinColor: "light", eyeColor: "brown",
                                        birthYear: "19bby", gender: "female"),
-                                Person(name: "Owen Lars", height: 178, mass: 120,
+                                Person(name: "Owen Lars", height: 178, mass: "120",
                                        hairColor: "brown, grey", skinColor: "light", eyeColor: "blue",
                                        birthYear: "52bby", gender: "male"),
-                                Person(name: "Beru Whitesun lars", height: 165, mass: 75,
+                                Person(name: "Beru Whitesun lars", height: 165, mass: "75",
                                        hairColor: "brown", skinColor: "light", eyeColor: "blue",
                                        birthYear: "47bby", gender: "female")]
     return persons
