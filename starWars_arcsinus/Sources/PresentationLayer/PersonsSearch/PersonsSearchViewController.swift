@@ -74,12 +74,13 @@ final class PersonsSearchViewController: UIViewController {
         .drive(onNext: { [weak self] persons in
           self?.persons = persons
           self?.pageControl.numberOfPages = persons.count
+          self?.searchBar.resignFirstResponder()
           self?.collectionView.reloadData()
         })
         .disposed(by: disposeBag)
       
       output.showNetworkError.emit(onNext: { message in
-        // FIXME: show error
+        self.showErrorAlert(title: "Error", message: message)
       }).disposed(by: disposeBag)
   }
   
@@ -90,6 +91,20 @@ final class PersonsSearchViewController: UIViewController {
       // let personDetailsViewController
       // present(personDetailsViewController, animated: true, completion: nil)
     }).disposed(by: disposeBag)
+  }
+  
+  private func makeAlertError(title: String, message: String) -> UIAlertController {
+    let alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alertController.addAction(okAction)
+    return alertController
+  }
+  
+  private func showErrorAlert(title: String, message: String) {
+    let controller = makeAlertError(title: title, message: message)
+    present(controller, animated: true, completion: nil)
   }
   
 }

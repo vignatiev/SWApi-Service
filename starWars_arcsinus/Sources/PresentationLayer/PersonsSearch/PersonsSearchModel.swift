@@ -12,7 +12,7 @@ import RxCocoa
 final class PersonsSearchModel {
   
   private let personsStorage: PersonsLocalStorage
-  private let searchService = SearchService.shared
+  private let searchService: SearchService
   
   private let disposeBag = DisposeBag()
   
@@ -23,8 +23,9 @@ final class PersonsSearchModel {
   let persons = BehaviorRelay<[Person]>(value: [])
   let networkError = PublishRelay<ApiError>()
   
-  init(personsStorage: PersonsLocalStorage) {
+  init(personsStorage: PersonsLocalStorage, searchService: SearchService = SearchService.shared) {
     self.personsStorage = personsStorage
+    self.searchService = searchService
     
     configureBindings()
   }
@@ -45,14 +46,14 @@ final class PersonsSearchModel {
     invalidText
       .subscribe(onNext: { [weak self] _ in
         guard let self = self else { return }
-        self.persons.accept(Array(self.personsStorage.getAllPersons()))
+        self.persons.accept(Array(self.personsStorage.getAllPersons(sortedBy: \.name)))
       })
       .disposed(by: disposeBag)
     
     // Загружаем из сети
     validText
       .debounce(0.25, scheduler: backgroundScheduler)
-      .flatMapLatest { [unowned self] text -> Single<GenericResult<[Person], ApiError>> in
+      .flatMapLatest { [unowned self] text -> Single<Result<[Person], ApiError>> in
         // Отправляем новый запрос и отменяем предыдущий
         return self.searchForPersons(withName: text)
       }.subscribe(onNext: { [weak self] result in
@@ -71,12 +72,12 @@ final class PersonsSearchModel {
 
 extension PersonsSearchModel {
   
-  private typealias ApiSearchResult = GenericResult<[Person], ApiError>
+  private typealias ApiSearchResult = Result<[Person], ApiError>
   
   private func searchForPersons(withName name: String) -> Single<ApiSearchResult> {
     // This Signal produces only .onNext events
     return Single.create(subscribe: { [unowned self] single in
-      let request = self.searchService.getInfoAboutPerson(withName: name) { result in
+      let request = self.searchService.getPerson(withName: name) { result in
         single(.success(result))
       }
       

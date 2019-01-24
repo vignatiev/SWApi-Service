@@ -18,7 +18,6 @@ extension Realm {
       do {
         try write(block)
       } catch {
-        NotificationCenter.default.post(name: .RealmWritingErrorNotifications, object: nil)
         assertionFailure("Realm write error: \(error)")
       }
     }

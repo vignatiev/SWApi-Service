@@ -33,8 +33,8 @@ final class SearchService {
   
   private init() { }
   
-  func getInfoAboutPerson(withName name: String,
-                          completion: @escaping(GenericResult<[Person], ApiError>) -> Void) -> DataRequest {
+  func getPerson(withName name: String,
+                 completion: @escaping(Result<[Person], ApiError>) -> Void) -> DataRequest {
     let url = makeUrl(withPath: SearchResource.people)!
     let parameters: Parameters = ["search": name]
     
@@ -49,15 +49,15 @@ final class SearchService {
           return
         }
         
-        let result: GenericResult<[Person], ApiError>
+        let result: Result<[Person], ApiError>
         
         switch response.result {
         case .success(let value):
-          guard let searchResponse = try? Mapper<SearchResponse>().map(JSONObject: value) else {
+          guard let searchResponse = try? Mapper<PersonsSearchResponse>().map(JSONObject: value) else {
             return
           }
           let persons = searchResponse.persons
-          result = GenericResult.success(persons)
+          result = Result.success(persons)
           
         case .failure(let error):
           // FIXME: handle all errors
@@ -74,7 +74,7 @@ final class SearchService {
     return URL(string: urlString)
   }
   
-  private func responseFailureResult<A>(response: DataResponse<Any>, error: Error) -> GenericResult<A, ApiError> {
+  private func responseFailureResult<A>(response: DataResponse<Any>, error: Error) -> Result<A, ApiError> {
     let apiError: ApiError
     if let statusCode = response.response?.statusCode {
       switch statusCode {

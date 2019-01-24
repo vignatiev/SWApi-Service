@@ -1,5 +1,5 @@
 //
-//  GenericResult.swift
+//  Result.swift
 //  starWars_arcsinus
 //
 //  Created by Владислав Игнатьев on 21.01.2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum GenericResult<Value, Error: Swift.Error>: CustomStringConvertible, CustomDebugStringConvertible {
+public enum Result<Value, Error: Swift.Error>: CustomStringConvertible, CustomDebugStringConvertible {
   case success(Value)
   case failure(Error)
   
