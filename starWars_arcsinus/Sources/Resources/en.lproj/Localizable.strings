@@ -1,10 +1,10 @@
 // Errors
-"errors-client-error" = "";
-"errors-auth-error" = "";
-"errors-mapping-error" = "";
-"errors-server-error" = "";
-"errors-network-error" = "";
-"errors-unknown-error" = "";
+"errors-client-error" = "An error occurred while accessing the server.";
+"errors-auth-error" = "An authorization error has occurred.";
+"errors-mapping-error" = "An error occurred while processing the data received from the server.";
+"errors-server-error" = "A server error occurred while executing the request.";
+"errors-network-error" = "No internet connection or very low connection speed.";
+"errors-unknown-error" = "An unknown network error has occurred.";
 
 // Person fields
 "name" = "Name";
@@ -29,7 +29,7 @@
 "releaseDate" = "Release Date";
 
 // Species
-"classification" = "classification";
+"classification" = "Classification";
 "designation" = "Designation";
 "average-height" = "Average Height";
 "skin-colors" = "Skin Colors";
@@ -37,7 +37,7 @@
 "eye-colors" = "Eye Colors";
 "average-lifespan" = "Average Lifespan";
 "language" = "Language";
-"people" = "people";
+"people" = "People";
 
 // Vahicle
 "model" = "Model";

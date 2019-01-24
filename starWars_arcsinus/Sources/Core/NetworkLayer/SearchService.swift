@@ -12,6 +12,7 @@ import ObjectMapper
 final class SearchService {
   
   static let shared = SearchService()
+  var sessionManager: Session!
   
   enum SearchResource: String {
     case films, people, planets, species, starships, vehicles
@@ -38,9 +39,11 @@ final class SearchService {
     let url = makeUrl(withPath: SearchResource.people)!
     let parameters: Parameters = ["search": name]
     
-    let sessionManager = Alamofire.Session.default
-    sessionManager.sessionConfiguration.timeoutIntervalForRequest = 10
-    sessionManager.sessionConfiguration.timeoutIntervalForResource = 10
+    let configuration = URLSessionConfiguration.default
+    configuration.timeoutIntervalForRequest = 5
+    configuration.timeoutIntervalForResource = 5
+    
+    sessionManager = Alamofire.Session(configuration: configuration)
     
     let request = sessionManager.request(url, method: .get, parameters: parameters)
       .validate(statusCode: 200..<300)
@@ -114,12 +117,12 @@ enum ApiError: Error, LocalizedError {
   
   var errorDescription: String? {
     switch self {
-    case .clientError: return "Произошла ошибка при обращении к серверу"
-    case .authorizationError: return "Произошла ошибка авторизации"
-    case .mappingError: return "Произошла ошибка при обработке данных, полученных от сервера"
-    case .serverError: return "Во время выполнения запроса произошла ошибка сервера"
-    case .networkError: return "Нет соединения с интернетом или очень низкая скорость подключения"
-    case .unknownError: return "Произошла неизвестная ошибка сети"
+    case .clientError: return LocalizedString.errorsClientError
+    case .authorizationError: return LocalizedString.errorsAuthError
+    case .mappingError: return LocalizedString.errorsMappingError
+    case .serverError: return LocalizedString.errorsServerError
+    case .networkError: return LocalizedString.errorsNetworkError
+    case .unknownError: return LocalizedString.errorsUnknownError
     }
   }
   

@@ -24,15 +24,14 @@ final class PersonDetailsViewController: UIViewController {
   
   private func configureWith(rowItems: [RowItem]) {
     self.rowItems = rowItems
-//    tableView.reloadData()
   }
   
   private enum RowItem {
     case header(String)
     // case subHeader(String) если надо
     case attribute(title: String, value: String) // например Цвет глаз: зеленый
-    case linkedAtrribute(title: String, value: String) /* например Мир: Tatooine (во view отображается другим цветом
-     или у ячейки disclosureIndicator.) */
+//    case linkedAtrribute(title: String, value: String) /* например Мир: Tatooine (во view отображается другим цветом
+//     или у ячейки disclosureIndicator.) */
   }
   
 }
@@ -71,10 +70,19 @@ extension PersonDetailsViewController: UITableViewDataSource {
     switch rowItem {
     case let .header(title): cell.configureTitle(title)
     case let .attribute(title, value): cell.configureTitle(title, withValue: value)
-    case let .linkedAtrribute(title, value): break
+//    case let .linkedAtrribute(title, value): break
     }
     
     return cell
+  }
+  
+}
+
+// MARK: - UITableViewDelegate
+extension PersonDetailsViewController: UITableViewDelegate {
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
   }
   
 }

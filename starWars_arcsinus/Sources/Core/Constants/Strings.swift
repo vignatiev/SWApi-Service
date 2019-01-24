@@ -18,7 +18,7 @@ internal enum LocalizedString {
   internal static let birthYear = LocalizedString.tr("Localizable", "birth-year")
   /// Cargo Capacity
   internal static let cargoCapacity = LocalizedString.tr("Localizable", "cargo-capacity")
-  /// classification
+  /// Classification
   internal static let classification = LocalizedString.tr("Localizable", "classification")
   /// Climate
   internal static let climate = LocalizedString.tr("Localizable", "climate")
@@ -36,17 +36,17 @@ internal enum LocalizedString {
   internal static let director = LocalizedString.tr("Localizable", "director")
   /// Episode number
   internal static let episodeId = LocalizedString.tr("Localizable", "episode-id")
-  /// 
+  /// An authorization error has occurred.
   internal static let errorsAuthError = LocalizedString.tr("Localizable", "errors-auth-error")
-  /// 
+  /// An error occurred while accessing the server.
   internal static let errorsClientError = LocalizedString.tr("Localizable", "errors-client-error")
-  /// 
+  /// An error occurred while processing the data received from the server.
   internal static let errorsMappingError = LocalizedString.tr("Localizable", "errors-mapping-error")
-  /// 
+  /// No internet connection or very low connection speed.
   internal static let errorsNetworkError = LocalizedString.tr("Localizable", "errors-network-error")
-  /// 
+  /// A server error occurred while executing the request.
   internal static let errorsServerError = LocalizedString.tr("Localizable", "errors-server-error")
-  /// 
+  /// An unknown network error has occurred.
   internal static let errorsUnknownError = LocalizedString.tr("Localizable", "errors-unknown-error")
   /// Eye Color
   internal static let eyeColor = LocalizedString.tr("Localizable", "eye-color")
@@ -90,7 +90,7 @@ internal enum LocalizedString {
   internal static let orbitalPeriod = LocalizedString.tr("Localizable", "orbitalPeriod")
   /// Passengers
   internal static let passengers = LocalizedString.tr("Localizable", "passengers")
-  /// people
+  /// People
   internal static let people = LocalizedString.tr("Localizable", "people")
   /// Pilots
   internal static let pilots = LocalizedString.tr("Localizable", "pilots")
