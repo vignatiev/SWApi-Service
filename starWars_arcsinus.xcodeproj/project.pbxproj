@@ -49,6 +49,12 @@
 		9BCB668E21F9DB04000E92D6 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB668D21F9DB04000E92D6 /* Vehicle.swift */; };
 		9BCB669021F9DC5C000E92D6 /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB668F21F9DC5C000E92D6 /* Starship.swift */; };
 		9BCB669221F9DDA6000E92D6 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB669121F9DDA6000E92D6 /* Planet.swift */; };
+		9BCB669421F9E233000E92D6 /* TypeToSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB669321F9E233000E92D6 /* TypeToSearchView.swift */; };
+		9BCB669721F9E246000E92D6 /* TypeToSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCB669621F9E246000E92D6 /* TypeToSearchView.xib */; };
+		9BCB669921F9FD96000E92D6 /* LoadingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCB669821F9FD96000E92D6 /* LoadingMessageView.xib */; };
+		9BCB669D21F9FE06000E92D6 /* LoadingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB669C21F9FE06000E92D6 /* LoadingMessageView.swift */; };
+		9BCB669F21F9FFBB000E92D6 /* UIView+PinEdges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB669E21F9FFBB000E92D6 /* UIView+PinEdges.swift */; };
+		9BCB66A121FA017D000E92D6 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB66A021FA017D000E92D6 /* UIView+Shadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +104,12 @@
 		9BCB668D21F9DB04000E92D6 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		9BCB668F21F9DC5C000E92D6 /* Starship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 		9BCB669121F9DDA6000E92D6 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		9BCB669321F9E233000E92D6 /* TypeToSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeToSearchView.swift; sourceTree = "<group>"; };
+		9BCB669621F9E246000E92D6 /* TypeToSearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TypeToSearchView.xib; sourceTree = "<group>"; };
+		9BCB669821F9FD96000E92D6 /* LoadingMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingMessageView.xib; sourceTree = "<group>"; };
+		9BCB669C21F9FE06000E92D6 /* LoadingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingMessageView.swift; sourceTree = "<group>"; };
+		9BCB669E21F9FFBB000E92D6 /* UIView+PinEdges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+PinEdges.swift"; sourceTree = "<group>"; };
+		9BCB66A021FA017D000E92D6 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,13 +129,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9B0045A121F9B047007E4675 /* PersonDetailsViewController */ = {
+		9B0045A121F9B047007E4675 /* PersonDetails */ = {
 			isa = PBXGroup;
 			children = (
 				9B0045A221F9B515007E4675 /* PersonDetailsViewController.swift */,
 				9BCB668621F9BE18000E92D6 /* Cell */,
 			);
-			path = PersonDetailsViewController;
+			path = PersonDetails;
 			sourceTree = "<group>";
 		};
 		9B6B838D21F2F65200554D2D = {
@@ -177,7 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				9B892A7421F5F0D600A3B58B /* PersonsSearch */,
-				9B0045A121F9B047007E4675 /* PersonDetailsViewController */,
+				9B0045A121F9B047007E4675 /* PersonDetails */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -239,6 +251,8 @@
 			children = (
 				9B6B83BF21F3076100554D2D /* UIView+Xib.swift */,
 				9B892A6321F5EB3700A3B58B /* UIView+AllNestedViews.swift */,
+				9BCB669E21F9FFBB000E92D6 /* UIView+PinEdges.swift */,
+				9BCB66A021FA017D000E92D6 /* UIView+Shadow.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -305,6 +319,7 @@
 				9B892A8221F603E500A3B58B /* PersonsSearchViewModel.swift */,
 				9B892A8F21F6126700A3B58B /* PersonsSearchModel.swift */,
 				9B892A7F21F5F48000A3B58B /* Cell */,
+				9BCB669521F9E236000E92D6 /* View */,
 			);
 			path = PersonsSearch;
 			sourceTree = "<group>";
@@ -384,6 +399,33 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		9BCB669521F9E236000E92D6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9BCB669B21F9FDEA000E92D6 /* LoadingMessage */,
+				9BCB669A21F9FDA0000E92D6 /* TypeToSearch */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BCB669A21F9FDA0000E92D6 /* TypeToSearch */ = {
+			isa = PBXGroup;
+			children = (
+				9BCB669321F9E233000E92D6 /* TypeToSearchView.swift */,
+				9BCB669621F9E246000E92D6 /* TypeToSearchView.xib */,
+			);
+			path = TypeToSearch;
+			sourceTree = "<group>";
+		};
+		9BCB669B21F9FDEA000E92D6 /* LoadingMessage */ = {
+			isa = PBXGroup;
+			children = (
+				9BCB669C21F9FE06000E92D6 /* LoadingMessageView.swift */,
+				9BCB669821F9FD96000E92D6 /* LoadingMessageView.xib */,
+			);
+			path = LoadingMessage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -445,6 +487,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BCB669921F9FD96000E92D6 /* LoadingMessageView.xib in Resources */,
+				9BCB669721F9E246000E92D6 /* TypeToSearchView.xib in Resources */,
 				9B6B83A421F2F65500554D2D /* LaunchScreen.storyboard in Resources */,
 				9B6B83B321F301C700554D2D /* Localizable.strings in Resources */,
 				9B892A7E21F5F47B00A3B58B /* PersonCollectionViewCell.xib in Resources */,
@@ -520,6 +564,7 @@
 				9BCB668421F9BE14000E92D6 /* PersonDetailsTableViewCell.swift in Sources */,
 				9B892A7D21F5F47B00A3B58B /* PersonCollectionViewCell.swift in Sources */,
 				9BCB669221F9DDA6000E92D6 /* Planet.swift in Sources */,
+				9BCB66A121FA017D000E92D6 /* UIView+Shadow.swift in Sources */,
 				9B892A9021F6126700A3B58B /* PersonsSearchModel.swift in Sources */,
 				9B90C2D121F65C03007EB8D7 /* Result.swift in Sources */,
 				9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */,
@@ -527,10 +572,12 @@
 				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
 				9B892A8121F6025A00A3B58B /* PersonsLocalStorage.swift in Sources */,
 				9B892A6E21F5EC6B00A3B58B /* ObjectMapper+Map.swift in Sources */,
+				9BCB669D21F9FE06000E92D6 /* LoadingMessageView.swift in Sources */,
 				9B00459E21F8FEE1007E4675 /* Preferences.swift in Sources */,
 				9BCB669021F9DC5C000E92D6 /* Starship.swift in Sources */,
 				9BCB668C21F9D8FB000E92D6 /* Species.swift in Sources */,
 				9B6B83C321F311D300554D2D /* Person.swift in Sources */,
+				9BCB669421F9E233000E92D6 /* TypeToSearchView.swift in Sources */,
 				9B892A7321F5EE8300A3B58B /* ViewModelType.swift in Sources */,
 				9B0045A321F9B515007E4675 /* PersonDetailsViewController.swift in Sources */,
 				9B892A7121F5ECDD00A3B58B /* Rx+FilterNil.swift in Sources */,
@@ -538,6 +585,7 @@
 				9B0045A021F914D2007E4675 /* DomainTransformable.swift in Sources */,
 				9BCB668821F9CBFD000E92D6 /* StoryboardInstantiatable.swift in Sources */,
 				9B6B839A21F2F65200554D2D /* AppDelegate.swift in Sources */,
+				9BCB669F21F9FFBB000E92D6 /* UIView+PinEdges.swift in Sources */,
 				9B892AAB21F64E8800A3B58B /* SearchService.swift in Sources */,
 				9B6B83BC21F3037600554D2D /* Constants.swift in Sources */,
 			);

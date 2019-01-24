@@ -67,7 +67,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.95646373042242527" green="0.72658196637953165" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.95646373039999999" green="0.72658196639999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cpr-UG-wha" firstAttribute="leading" secondItem="5F7-1s-qmZ" secondAttribute="leading" id="0bq-A6-L9Y"/>
                             <constraint firstItem="WQG-ne-jTO" firstAttribute="top" secondItem="6E4-oX-dB3" secondAttribute="bottom" constant="8" id="3Ms-BA-SUS"/>
@@ -99,11 +99,12 @@
             <size key="customSize" width="250" height="279"/>
             <connections>
                 <outlet property="birthYearLabel" destination="WQG-ne-jTO" id="uCZ-F2-KLv"/>
-                <outlet property="containerView" destination="cMp-3Y-IkN" id="NfP-xN-eb9"/>
+                <outlet property="containerView" destination="cMp-3Y-IkN" id="ay9-Dv-1s1"/>
                 <outlet property="genderLabel" destination="6E4-oX-dB3" id="P7h-MV-h31"/>
                 <outlet property="heightLabel" destination="5F7-1s-qmZ" id="f9p-OC-aRb"/>
                 <outlet property="massLabel" destination="cpr-UG-wha" id="8J0-fH-qbw"/>
                 <outlet property="nameLabel" destination="vS3-FB-gks" id="Cwb-Bw-Lob"/>
+                <outlet property="viewWithName" destination="ri0-nx-oEH" id="14J-Mc-9KF"/>
             </connections>
             <point key="canvasLocation" x="-206.40000000000001" y="-21.139430284857571"/>
         </collectionViewCell>

@@ -70,10 +70,10 @@
             </objects>
             <point key="canvasLocation" x="1927.2" y="1.3493253373313345"/>
         </scene>
-        <!--PersonDetailsViewController-->
+        <!--Person Details View Controller-->
         <scene sceneID="Uhv-l5-gvL">
             <objects>
-                <viewController title="PersonDetailsViewController" id="gAZ-Q0-x0D" customClass="PersonDetailsViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonDetailsViewController" id="gAZ-Q0-x0D" customClass="PersonDetailsViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5UN-pq-z90">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

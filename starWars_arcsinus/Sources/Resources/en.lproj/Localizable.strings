@@ -1,1 +1,71 @@
+// Errors
+"errors-client-error" = "";
+"errors-auth-error" = "";
+"errors-mapping-error" = "";
+"errors-server-error" = "";
+"errors-network-error" = "";
+"errors-unknown-error" = "";
 
+// Person fields
+"name" = "Name";
+"height" = "Height";
+"mass" = "Mass";
+"hair-color" = "Hair Color";
+"skin-color" = "Skin Color";
+"eye-color" = "Eye Color";
+"birth-year" = "Birth Year";
+"gender" = "Gender";
+"homeworld" = "Homeworld";
+"films" = "Films";
+"species" = "Species";
+"vehicles" = "Vehicles";
+"starships" = "Starships";
+
+// Film
+"title" = "Title";
+"episode-id" = "Episode number";
+"director" = "Director";
+"producer" = "Producer";
+"releaseDate" = "Release Date";
+
+// Species
+"classification" = "classification";
+"designation" = "Designation";
+"average-height" = "Average Height";
+"skin-colors" = "Skin Colors";
+"hair-colors" = "Hair Colors";
+"eye-colors" = "Eye Colors";
+"average-lifespan" = "Average Lifespan";
+"language" = "Language";
+"people" = "people";
+
+// Vahicle
+"model" = "Model";
+"manufacturer" = "Manufacturer";
+"cost-in-credits" = "Cost in Credits";
+"length" = "Length";
+"max-atmosphering-speed" = "Max Atmosphering Speed";
+"crew" = "Crew";
+"passengers" = "Passengers";
+"cargo-capacity" = "Cargo Capacity";
+"consumables" = "Consumables";
+"vehicle-class" = "Vehicle Class";
+"pilots" = "Pilots";
+
+// Starship
+"hyperdrive-rating" = "Hyperdrive Rating";
+"mglt" = "MGLT";
+"starship-class" = "Starship Class";
+
+// Planet
+"rotationPeriod" = "Rotation Period";
+"orbitalPeriod" = "Orbital Period";
+"diameter" = "Diameter";
+"climate" = "Climate";
+"gravity" = "Gravity";
+"terrain" = "Terrain";
+"surfaceWater" = "Surface Water";
+"population" = "Population";
+
+"loading-message-label" = "Loading";
+"type-to-search-label" = "Input Text To Find A Charcter";

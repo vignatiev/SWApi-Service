@@ -74,11 +74,16 @@ extension PersonsSearchViewModel {
     let gender: Field
     
     init(person: Person) {
-      self.name = Field(title: "Имя", value: person.name)
-      self.height = Field(title: "Рост", value: String(person.height))
-      self.mass = Field(title: "Вес", value: person.mass)
-      self.birthYear = Field(title: "Год рождения", value: person.birthYear)
-      self.gender = Field(title: "Пол", value: person.gender)
+      self.name = Field(title: LocalizedString.name.capitalized,
+                        value: person.name.uppercased())
+      self.height = Field(title: LocalizedString.height.capitalized,
+                          value: String(person.height))
+      self.mass = Field(title: LocalizedString.mass.capitalized,
+                        value: person.mass)
+      self.birthYear = Field(title: LocalizedString.birthYear.capitalized,
+                             value: person.birthYear.uppercased())
+      self.gender = Field(title: LocalizedString.gender.capitalized,
+                          value: person.gender.capitalized)
     }
     
     struct Field {

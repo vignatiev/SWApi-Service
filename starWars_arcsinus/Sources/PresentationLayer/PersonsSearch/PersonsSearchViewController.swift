@@ -23,6 +23,9 @@ final class PersonsSearchViewController: UIViewController {
   
   private var persons: [PersonsSearchViewModel.PersonViewModel] = []
   
+  private var typeToSearchView: TypeToSearchView?
+  private var loadingMessageView: LoadingMessageView?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -33,12 +36,8 @@ final class PersonsSearchViewController: UIViewController {
     let model = PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)
     let viewModel = PersonsSearchViewModel(model: model)
     configureWith(viewModel: viewModel)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
     
-    setupAppearance(of: searchBar)
+    configureUI()
   }
   
   func configureWith(viewModel: PersonsSearchViewModel) {
@@ -46,6 +45,29 @@ final class PersonsSearchViewController: UIViewController {
     
     bindViewWith(viewModel: viewModel)
     bindWith(moduleOutput: viewModel)
+  }
+  
+  private func configureUI() {
+    setupAppearance(of: searchBar)
+    
+    // type to search view
+    typeToSearchView = TypeToSearchView.loadFromNib()
+    view.addSubview(typeToSearchView!)
+    let constrains: [NSLayoutConstraint] = [
+      typeToSearchView!.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+      typeToSearchView!.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      typeToSearchView!.heightAnchor.constraint(equalToConstant: 100),
+      typeToSearchView!.widthAnchor.constraint(equalToConstant: 200)
+    ]
+    NSLayoutConstraint.activate(constrains)
+    typeToSearchView?.isHidden = true
+    typeToSearchView?.setShadow(withColor: .black, offset: CGSize(width: 0, height: 10), radius: 15, andOpacity: 0.3)
+    
+    // loading message view
+    loadingMessageView = LoadingMessageView.loadFromNib()
+    view.addSubview(loadingMessageView!)
+    loadingMessageView?.pinEdgesTo(superView: view)
+    loadingMessageView?.isHidden = true
   }
   
   private func setupAppearance(of searchBar: UISearchBar) {
@@ -72,8 +94,17 @@ final class PersonsSearchViewController: UIViewController {
       
       output.persons
         .drive(onNext: { [weak self] persons in
-          self?.persons = persons
+          let greaterThanZeroElements = persons.count > 0
+          self?.typeToSearchView?.isHidden = greaterThanZeroElements
+          self?.pageControl.isHidden = !greaterThanZeroElements
+          self?.collectionView.isHidden = !greaterThanZeroElements
+          
+          self?.typeToSearchView?.setView(hidden: greaterThanZeroElements)
+          self?.pageControl.setView(hidden: !greaterThanZeroElements)
+          self?.collectionView.setView(hidden: !greaterThanZeroElements)
+          
           self?.pageControl.numberOfPages = persons.count
+          self?.persons = persons
           self?.searchBar.resignFirstResponder()
           self?.collectionView.reloadData()
         })

@@ -11,6 +11,7 @@ import UIKit
 final class PersonCollectionViewCell: UICollectionViewCell {
   
   @IBOutlet private var nameLabel: UILabel!
+  @IBOutlet private var viewWithName: UIView!
   @IBOutlet private var genderLabel: UILabel!
   @IBOutlet private var birthYearLabel: UILabel!
   @IBOutlet private var heightLabel: UILabel!
@@ -45,6 +46,11 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     initialSetup()
+    
+    containerView.layer.shadowColor = UIColor.black.cgColor
+    containerView.layer.shadowOffset = CGSize(width: 0, height: 10)
+    containerView.layer.shadowRadius = 15
+    containerView.layer.shadowOpacity = 0.3
   }
   
   func configureWith(viewModel: PersonsSearchViewModel.PersonViewModel) {
@@ -65,7 +71,9 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   
   private func initialSetup() {
     containerView.layer.cornerRadius = 30
-    containerView.layer.masksToBounds = true
+    containerView.layer.masksToBounds = false
+    viewWithName.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+    viewWithName.layer.cornerRadius = 30
     
     nameLabel.numberOfLines = 0
     nameLabel.textColor = .black

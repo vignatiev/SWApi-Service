@@ -14,9 +14,17 @@ final class PersonDetailsViewController: UIViewController {
   
   private var rowItems = [RowItem]()
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    tableView.register(PersonDetailsTableViewCell.self)
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.separatorStyle = .none
+  }
+  
   private func configureWith(rowItems: [RowItem]) {
     self.rowItems = rowItems
-     tableView.reloadData()
+//    tableView.reloadData()
   }
   
   private enum RowItem {
@@ -29,42 +37,44 @@ final class PersonDetailsViewController: UIViewController {
   
 }
 
-// MARK: - UITableViewDataSource
-extension PersonDetailsViewController: UITableViewDataSource {
-  
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let rowItem = rowItems[unsafeIndex: indexPath.row] else { return UITableViewCell() }
-    
-    switch rowItem {
-    case let .header(title): return UITableViewCell()
-    case let .attribute(title, value): return UITableViewCell()
-    case let .linkedAtrribute(title, value): return UITableViewCell()
-    }
-    
-  }
-  
-}
-
 extension PersonDetailsViewController {
   
   func configureWith(person: Person) {
     let rowItems: [RowItem] = [
-      .attribute(title: "Name", value: person.name),
-      .attribute(title: "Height", value: String(person.height)),
-      .attribute(title: "Mass", value: person.mass),
-      .attribute(title: "HairColor", value: person.hairColor),
-      .attribute(title: "SkinColor", value: person.skinColor),
-      .attribute(title: "EyeColor", value: person.eyeColor),
-      .attribute(title: "BirthYear", value: person.birthYear),
-      .attribute(title: "Gender", value: person.gender)
+      .attribute(title: LocalizedString.name, value: person.name.uppercased()),
+      .attribute(title: LocalizedString.height, value: String(person.height)),
+      .attribute(title: LocalizedString.mass, value: person.mass),
+      .attribute(title: LocalizedString.hairColor, value: person.hairColor.capitalized),
+      .attribute(title: LocalizedString.skinColor, value: person.skinColor.capitalized),
+      .attribute(title: LocalizedString.eyeColor, value: person.eyeColor.capitalized),
+      .attribute(title: LocalizedString.birthYear, value: person.birthYear.uppercased()),
+      .attribute(title: LocalizedString.gender, value: person.gender.capitalized)
       // .linkedAtrribute(title: "Homeworld", value:)
     ]
     
     configureWith(rowItems: rowItems)
+  }
+  
+}
+
+// MARK: - UITableViewDataSource
+extension PersonDetailsViewController: UITableViewDataSource {
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return rowItems.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let rowItem = rowItems[unsafeIndex: indexPath.row] else { return UITableViewCell() }
+    let cell: PersonDetailsTableViewCell = tableView.dequeue(forIndexPath: indexPath)
+    
+    switch rowItem {
+    case let .header(title): cell.configureTitle(title)
+    case let .attribute(title, value): cell.configureTitle(title, withValue: value)
+    case let .linkedAtrribute(title, value): break
+    }
+    
+    return cell
   }
   
 }
