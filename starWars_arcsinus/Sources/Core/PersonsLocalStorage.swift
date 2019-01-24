@@ -17,8 +17,7 @@ final class PersonsLocalStorage {
   private init() { }
   
   func create(person: Person) {
-    let searchHistory = getAllSearchedPersons()
-    guard !searchHistory.contains(person) else {
+    if realm.objects(PersonObject.self).filter("name = %@", person.name).first != nil {
       return
     }
     
@@ -28,6 +27,7 @@ final class PersonsLocalStorage {
       realm.add(realmPerson)
     }
   }
+
   
   func update(person: Person) {
     guard let realmPerson = realm.objects(PersonObject.self).filter("name = %@", person.name).first else {
@@ -48,7 +48,7 @@ final class PersonsLocalStorage {
     }
   }
   
-  func getAllSearchedPersons() -> Set<Person> {
+  func getAllPersons() -> Set<Person> {
     let searchHistory = Set(realm.objects(PersonObject.self).map { $0.asDomain() })
     return searchHistory
   }
@@ -58,7 +58,7 @@ final class PersonsLocalStorage {
 extension PersonsLocalStorage {
   
   func updateHistoryWith(persons: Set<Person>) {
-    let history = getAllSearchedPersons()
+    let history = getAllPersons()
     
     for person in persons {
       if history.contains(person) {
@@ -71,11 +71,11 @@ extension PersonsLocalStorage {
   }
   
   func getAllPersons(sortedBy keyPath: KeyPath<Person, String>) -> [Person] {
-    return getAllSearchedPersons().sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+    return getAllPersons().sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
   }
   
   func getPersons(with keyPath: KeyPath<Person, String>, equalTo value: String) -> Set<Person> {
-    return getAllSearchedPersons().filter { $0[keyPath: keyPath] == value }
+    return getAllPersons().filter { $0[keyPath: keyPath] == value }
   }
   
 }

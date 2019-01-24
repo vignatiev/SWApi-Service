@@ -18,6 +18,11 @@ struct Person: Hashable {
   let eyeColor: String
   let birthYear: String
   let gender: String
+//  let homeWorld: URL
+//  let films: [URL]
+//  let species: [URL]
+//  let vehicles: [URL]
+//  let starships: [URL]
   
   init(name: String, height: Int, mass: String,
        hairColor: String, skinColor: String, eyeColor: String,
@@ -30,6 +35,11 @@ struct Person: Hashable {
     self.eyeColor = eyeColor
     self.birthYear = birthYear
     self.gender = gender
+//    self.homeWorld = homeWorld
+//    self.films = films
+//    self.species = species
+//    self.vehicles = vehicles
+//    self.starships = starships
   }
   
 }
@@ -46,6 +56,11 @@ extension Person: ImmutableMappable {
     self.skinColor = try map.stringIfNotEmpty("skin_color")
     self.birthYear = try map.stringIfNotEmpty("birth_year")
     self.gender = try map.stringIfNotEmpty("gender")
+//    self.homeWorld = try map.stringIfNotEmpty("homeworld").asURL()
+//    self.films = try map.value("films")
+//    self.species = try map.value("species")
+//    self.vehicles = try map.value("vehicles")
+//    self.starships = try map.value("starships")
   }
   
 }
@@ -57,4 +72,5 @@ struct PersonsSearchResponse: ImmutableMappable {
   init(map: Map) throws {
     persons = try map.compactMapArrayOrEmpty("results")
   }
+  
 }

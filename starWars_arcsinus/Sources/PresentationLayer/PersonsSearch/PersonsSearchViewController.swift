@@ -80,20 +80,20 @@ final class PersonsSearchViewController: UIViewController {
         .disposed(by: disposeBag)
       
       output.showNetworkError.emit(onNext: { message in
-        self.showErrorAlert(title: "Error", message: message)
+        self.showErrorAlert(title: nil, message: message)
       }).disposed(by: disposeBag)
   }
   
   private func bindWith(moduleOutput: PersonsSearchModuleOutput) {
     // Биндинги для контроллера
     moduleOutput.showPersonDetails.emit(onNext: { person in
-      // FIXME: Implement
-      // let personDetailsViewController
-      // present(personDetailsViewController, animated: true, completion: nil)
+      let personDetailsViewController = PersonDetailsViewController.instantiateFromStoryboard()
+      personDetailsViewController.configureWith(person: person)
+      self.present(personDetailsViewController, animated: true, completion: nil)
     }).disposed(by: disposeBag)
   }
   
-  private func makeAlertError(title: String, message: String) -> UIAlertController {
+  private func makeAlertError(title: String?, message: String) -> UIAlertController {
     let alertController = UIAlertController(title: title,
                                             message: message,
                                             preferredStyle: .alert)
@@ -102,7 +102,7 @@ final class PersonsSearchViewController: UIViewController {
     return alertController
   }
   
-  private func showErrorAlert(title: String, message: String) {
+  private func showErrorAlert(title: String?, message: String) {
     let controller = makeAlertError(title: title, message: message)
     present(controller, animated: true, completion: nil)
   }

@@ -116,7 +116,7 @@ enum ApiError: Error, LocalizedError {
     switch self {
     case .clientError: return "Произошла ошибка при обращении к серверу"
     case .authorizationError: return "Произошла ошибка авторизации"
-    case .mappingError: return "Произошла ошибка при оьработке данных, полученных от сервера"
+    case .mappingError: return "Произошла ошибка при обработке данных, полученных от сервера"
     case .serverError: return "Во время выполнения запроса произошла ошибка сервера"
     case .networkError: return "Нет соединения с интернетом или очень низкая скорость подключения"
     case .unknownError: return "Произошла неизвестная ошибка сети"
