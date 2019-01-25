@@ -92,6 +92,12 @@ internal enum LocalizedString {
   internal static let passengers = LocalizedString.tr("Localizable", "passengers")
   /// People
   internal static let people = LocalizedString.tr("Localizable", "people")
+  /// Details
+  internal static let personDetailsTitle = LocalizedString.tr("Localizable", "person-details-title")
+  /// Recent Viewed
+  internal static let personSearchSourceLocal = LocalizedString.tr("Localizable", "person-search-source-local")
+  /// Search
+  internal static let personSearchSourceResponse = LocalizedString.tr("Localizable", "person-search-source-response")
   /// Pilots
   internal static let pilots = LocalizedString.tr("Localizable", "pilots")
   /// Population

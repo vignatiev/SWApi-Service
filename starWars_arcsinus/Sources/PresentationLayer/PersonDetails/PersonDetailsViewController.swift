@@ -20,6 +20,8 @@ final class PersonDetailsViewController: UIViewController {
     tableView.register(PersonDetailsTableViewCell.self)
     tableView.rowHeight = UITableView.automaticDimension
     tableView.separatorStyle = .none
+    
+    title = LocalizedString.personDetailsTitle
   }
   
   private func configureWith(rowItems: [RowItem]) {

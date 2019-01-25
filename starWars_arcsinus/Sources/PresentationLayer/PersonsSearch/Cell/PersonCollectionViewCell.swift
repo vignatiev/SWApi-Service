@@ -14,6 +14,7 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   @IBOutlet private var viewWithName: UIView!
   @IBOutlet private var genderLabel: UILabel!
   @IBOutlet private var birthYearLabel: UILabel!
+  @IBOutlet private var imageView: UIImageView!
   @IBOutlet private var heightLabel: UILabel!
   @IBOutlet private var massLabel: UILabel!
   @IBOutlet private var containerView: UIView!
@@ -70,10 +71,16 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   }
   
   private func initialSetup() {
-    containerView.layer.cornerRadius = 30
+    let cornerRadius: CGFloat = 30
+    
+    imageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    imageView.layer.cornerRadius = cornerRadius
+
+    containerView.layer.cornerRadius = cornerRadius
     containerView.layer.masksToBounds = false
+
     viewWithName.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-    viewWithName.layer.cornerRadius = 30
+    viewWithName.layer.cornerRadius = cornerRadius
     
     nameLabel.numberOfLines = 0
     nameLabel.textColor = .black

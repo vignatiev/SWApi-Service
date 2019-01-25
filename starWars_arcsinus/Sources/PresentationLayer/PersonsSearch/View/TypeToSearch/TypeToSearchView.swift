@@ -15,8 +15,8 @@ final class TypeToSearchView: UIView {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    backgroundColor = .magenta
-    layer.cornerRadius = 20
+    typeToSearchLabel.text = LocalizedString.typeToSearchLabel
+    typeToSearchLabel.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
   }
   
 }

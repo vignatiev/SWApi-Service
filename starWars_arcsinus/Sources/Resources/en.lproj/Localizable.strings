@@ -72,3 +72,10 @@
 
 // Nothing found view
 "no-results-for-your-search" = "No results for your search.";
+
+// Persons Search View Controller
+"person-search-source-local" = "Recent Viewed";
+"person-search-source-response" = "Search";
+
+// Person Details View Controller
+"person-details-title" = "Details";

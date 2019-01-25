@@ -51,6 +51,12 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     let typeToSearchViewVisible = model.persons.asDriver().map { $0.areLocal && $0.persons.isEmpty }
     let isEmptyResultViewVisible = model.persons.asDriver().map { !$0.areLocal && $0.persons.isEmpty }
     
+    let isDataSourceLabelVisible = model.persons.asDriver().map { $0.persons.isNotEmpty }
+    let dataSource = model.persons.asDriver()
+      .map {
+        return $0.areLocal ? LocalizedString.personSearchSourceLocal : LocalizedString.personSearchSourceResponse
+      }.map { $0.uppercased() }
+    
     let keyboardHidingDelay: Double = 1
     let textInputTimeStamps = input.searchText.map { _ in Date().timeIntervalSince1970 }
     let delayedPersonsUpdate = model.persons
@@ -81,7 +87,9 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
                   typeToSearchViewVisible: typeToSearchViewVisible,
                   pageControlVisivble: pageControlVisible,
                   collectionViewVisivble: collectionViewVisible,
-                  isEmptyResultViewVisible: isEmptyResultViewVisible)
+                  isEmptyResultViewVisible: isEmptyResultViewVisible,
+                  isDataSourceLabelVisible: isDataSourceLabelVisible,
+                  dataSource: dataSource)
   }
   
   struct Input {
@@ -98,6 +106,9 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     let pageControlVisivble: Driver<Bool>
     let collectionViewVisivble: Driver<Bool>
     let isEmptyResultViewVisible: Driver<Bool>
+    let isDataSourceLabelVisible: Driver<Bool>
+    
+    let dataSource: Driver<String>
   }
   
 }

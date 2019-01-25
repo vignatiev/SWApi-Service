@@ -41,23 +41,32 @@
                                 <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" red="1" green="0.26022542120905889" blue="0.48901659718754287" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DataSource" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAr-VT-TA1">
+                                <rect key="frame" x="8" y="68" width="71" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
+                                <color key="textColor" white="0.0" alpha="0.75440140845070425" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" secondItem="Bqu-3X-jqJ" secondAttribute="trailing" id="MBl-UV-2p3"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="bottom" secondItem="dJJ-Fh-Jqd" secondAttribute="bottom" constant="24" id="P4h-rx-YW9"/>
+                            <constraint firstItem="SAr-VT-TA1" firstAttribute="leading" secondItem="gK6-la-P7M" secondAttribute="leading" constant="8" id="REd-Rf-MSL"/>
                             <constraint firstItem="dJJ-Fh-Jqd" firstAttribute="top" secondItem="Bqu-3X-jqJ" secondAttribute="bottom" id="S0J-Xb-zjk"/>
                             <constraint firstItem="Bqu-3X-jqJ" firstAttribute="top" secondItem="gK6-la-P7M" secondAttribute="top" id="VV0-Cs-bb9"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" secondItem="dJJ-Fh-Jqd" secondAttribute="trailing" id="aEg-WY-JBa"/>
                             <constraint firstItem="dJJ-Fh-Jqd" firstAttribute="leading" secondItem="gK6-la-P7M" secondAttribute="leading" id="en3-vZ-7Nx"/>
                             <constraint firstItem="Bqu-3X-jqJ" firstAttribute="leading" secondItem="gK6-la-P7M" secondAttribute="leading" id="fAg-3j-nqo"/>
+                            <constraint firstItem="SAr-VT-TA1" firstAttribute="top" secondItem="gK6-la-P7M" secondAttribute="top" constant="4" id="iOb-Uz-wof"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gK6-la-P7M"/>
                     </view>
                     <navigationItem key="navigationItem" id="SKr-Gl-6yt"/>
                     <connections>
                         <outlet property="collectionView" destination="Bqu-3X-jqJ" id="g2T-nw-RUy"/>
-                        <outlet property="pageControl" destination="dJJ-Fh-Jqd" id="8aO-hB-Kuv"/>
+                        <outlet property="dataSourceLabel" destination="SAr-VT-TA1" id="QPn-ta-eH4"/>
+                        <outlet property="pageControl" destination="dJJ-Fh-Jqd" id="Xjr-Nj-65k"/>
                         <outlet property="searchBar" destination="jPv-F2-auo" id="gS9-CQ-qdk"/>
                     </connections>
                 </viewController>

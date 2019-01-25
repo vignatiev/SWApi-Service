@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="250" height="225"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Death-Star" translatesAutoresizingMaskIntoConstraints="NO" id="xae-zz-dMB">
+                <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="death-star" translatesAutoresizingMaskIntoConstraints="NO" id="xae-zz-dMB">
                     <rect key="frame" x="61" y="89" width="128" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="1oE-Bq-QC2"/>
@@ -52,6 +52,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Death-Star" width="128" height="128"/>
+        <image name="death-star" width="1024" height="1024"/>
     </resources>
 </document>

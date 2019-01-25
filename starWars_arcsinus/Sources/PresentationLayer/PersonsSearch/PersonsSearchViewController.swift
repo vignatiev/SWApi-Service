@@ -15,6 +15,7 @@ final class PersonsSearchViewController: UIViewController {
   @IBOutlet private var collectionView: UICollectionView!
   @IBOutlet private var searchBar: UISearchBar!
   @IBOutlet private var pageControl: UIPageControl!
+  @IBOutlet private var dataSourceLabel: UILabel!
   
   private let typeToSearchView = TypeToSearchView.loadFromNib()
   private let emptyResultView = EmptyResultView.loadFromNib()
@@ -67,7 +68,8 @@ final class PersonsSearchViewController: UIViewController {
       
       output.isEmptyResultViewVisible.drive(emptyResultView.rx.isVisible).disposed(by: disposeBag)
       
-      
+      output.isDataSourceLabelVisible.drive(dataSourceLabel.rx.isVisible).disposed(by: disposeBag)
+      output.dataSource.drive(dataSourceLabel.rx.text).disposed(by: disposeBag)
       
       output.hideKeyboardAfterSearch.emit(onNext: { [weak self] in
         self?.searchBar.resignFirstResponder()
@@ -135,7 +137,6 @@ extension PersonsSearchViewController {
     ]
     NSLayoutConstraint.activate(constrains)
     typeToSearchView.isHidden = true
-    typeToSearchView.setShadow(withColor: .black, offset: CGSize(width: 0, height: 10), radius: 15, andOpacity: 0.3)
   }
   
   private func addToViewHierarchy(_ typeToSearchView: EmptyResultView) {
@@ -143,12 +144,12 @@ extension PersonsSearchViewController {
     
     let constrains: [NSLayoutConstraint] = [
       emptyResultView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-      emptyResultView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor)
-//      emptyResultView.heightAnchor.constraint(equalToConstant: 100),
-//      emptyResultView.widthAnchor.constraint(equalToConstant: 200)
+      emptyResultView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      emptyResultView.heightAnchor.constraint(equalToConstant: 250),
+      emptyResultView.widthAnchor.constraint(equalToConstant: 225)
     ]
     NSLayoutConstraint.activate(constrains)
-//    emptyResultView.isHidden = true
+    emptyResultView.isHidden = true
   }
   
   private func setupAppearance(of searchBar: UISearchBar) {
