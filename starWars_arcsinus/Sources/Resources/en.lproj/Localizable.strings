@@ -67,5 +67,8 @@
 "surfaceWater" = "Surface Water";
 "population" = "Population";
 
-"loading-message-label" = "Loading";
-"type-to-search-label" = "Input Text To Find A Charcter";
+// Type to search view
+"type-to-search-label" = "Input Text To Find A Character";
+
+// Nothing found view
+"no-results-for-your-search" = "No results for your search.";

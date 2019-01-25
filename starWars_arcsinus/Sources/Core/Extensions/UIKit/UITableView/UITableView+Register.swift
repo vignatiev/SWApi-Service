@@ -68,7 +68,7 @@ public extension UITableView {
 // MARK: - UICollectionView
 public extension UICollectionView {
   
-  func dequeueCollectionCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath)
+  func dequeue<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath)
     -> T where T: TableViewDequeuable {
       guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
         fatalError("Could not dequeue cell with identifier \(T.reuseIdentifier)")

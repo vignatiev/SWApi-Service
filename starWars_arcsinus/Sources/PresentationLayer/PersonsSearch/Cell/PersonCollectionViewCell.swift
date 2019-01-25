@@ -22,9 +22,9 @@ final class PersonCollectionViewCell: UICollectionViewCell {
     didSet {
       var transform = CGAffineTransform.identity
       if isTouched {
-        transform = transform.scaledBy(x: 0.9, y: 0.9)
+        transform = transform.scaledBy(x: 0.96, y: 0.96)
       }
-      UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8,
+      UIView.animate(withDuration: 0.22, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8,
                      options: [.beginFromCurrentState], animations: {
                       self.transform = transform
       })

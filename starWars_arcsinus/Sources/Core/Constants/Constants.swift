@@ -12,9 +12,3 @@ struct Constants {
   static let baseUrl = "https://swapi.co/"
   
 }
-
-enum AnimationDuration: Double {
-  case fast = 0.2
-  case middle = 0.3
-  case slow = 0.5
-}

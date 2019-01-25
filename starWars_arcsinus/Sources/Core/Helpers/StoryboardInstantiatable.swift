@@ -27,7 +27,7 @@ extension StoryboardInstantiatable where Self: UIViewController {
   }
 }
 
-enum StoryboardNamed: CustomStringConvertible {
+enum StoryboardName: CustomStringConvertible {
   case main
   
   var description: String {

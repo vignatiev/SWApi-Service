@@ -16,6 +16,9 @@ final class PersonsSearchViewController: UIViewController {
   @IBOutlet private var searchBar: UISearchBar!
   @IBOutlet private var pageControl: UIPageControl!
   
+  private let typeToSearchView = TypeToSearchView.loadFromNib()
+  private let emptyResultView = EmptyResultView.loadFromNib()
+  
   private var viewModel: AnyObject?
   
   private let didSelectPerson = PublishRelay<Int>()
@@ -23,21 +26,15 @@ final class PersonsSearchViewController: UIViewController {
   
   private var persons: [PersonsSearchViewModel.PersonViewModel] = []
   
-  private var typeToSearchView: TypeToSearchView?
-  private var loadingMessageView: LoadingMessageView?
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    navigationItem.titleView = searchBar
-    collectionView.register(PersonCollectionViewCell.self)
-    collectionView.delaysContentTouches = false
+    configureUI()
     
     let model = PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)
     let viewModel = PersonsSearchViewModel(model: model)
-    configureWith(viewModel: viewModel)
     
-    configureUI()
+    configureWith(viewModel: viewModel)
   }
   
   func configureWith(viewModel: PersonsSearchViewModel) {
@@ -47,27 +44,111 @@ final class PersonsSearchViewController: UIViewController {
     bindWith(moduleOutput: viewModel)
   }
   
+  private func bindViewWith<V>(viewModel: V)
+    where V: ViewModelType, V.Input == PersonsSearchViewModel.Input, V.Output == PersonsSearchViewModel.Output {
+      
+      let searchText = searchBar.rx.text.asObservable().filterNil()
+      let input = PersonsSearchViewModel.Input(searchText: searchText,
+                                               itemWasSelected: didSelectPerson.asObservable())
+      let output = viewModel.transform(input: input)
+      
+      output.persons
+        .drive(onNext: { [weak self] persons in
+          
+          self?.pageControl.numberOfPages = persons.count
+          self?.persons = persons
+          self?.collectionView.reloadData()
+        })
+        .disposed(by: disposeBag)
+      
+      output.typeToSearchViewVisible.drive(typeToSearchView.rx.isVisible).disposed(by: disposeBag)
+      output.collectionViewVisivble.drive(collectionView.rx.isVisible).disposed(by: disposeBag)
+      output.pageControlVisivble.drive(pageControl.rx.isVisible).disposed(by: disposeBag)
+      
+      output.isEmptyResultViewVisible.drive(emptyResultView.rx.isVisible).disposed(by: disposeBag)
+      
+      
+      
+      output.hideKeyboardAfterSearch.emit(onNext: { [weak self] in
+        self?.searchBar.resignFirstResponder()
+      }).disposed(by: disposeBag)
+      
+      output.showNetworkError.emit(onNext: { message in
+        self.showErrorAlert(title: nil, message: message)
+      }).disposed(by: disposeBag)
+  }
+  
+  private func bindWith(moduleOutput: PersonsSearchModuleOutput) {
+    // Биндинги для контроллера
+    moduleOutput.showPersonDetails
+      .emit(onNext: { person in
+        let personDetailsViewController = PersonDetailsViewController.instantiateFromStoryboard()
+        personDetailsViewController.configureWith(person: person)
+        self.navigationController?.pushViewController(personDetailsViewController, animated: true)
+      }).disposed(by: disposeBag)
+  }
+  
+}
+
+extension PersonsSearchViewController {
+  // MARK: Alerts
+  
+  private func makeAlertError(title: String?, message: String) -> UIAlertController {
+    let alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alertController.addAction(okAction)
+    return alertController
+  }
+  
+  private func showErrorAlert(title: String?, message: String) {
+    let controller = makeAlertError(title: title, message: message)
+    present(controller, animated: true, completion: nil)
+  }
+  
+}
+
+extension PersonsSearchViewController {
+  // MARK: Initial UI Config
+  
   private func configureUI() {
+    navigationItem.titleView = searchBar
+    
     setupAppearance(of: searchBar)
     
-    // type to search view
-    typeToSearchView = TypeToSearchView.loadFromNib()
-    view.addSubview(typeToSearchView!)
+    collectionView.register(PersonCollectionViewCell.self)
+    collectionView.delaysContentTouches = false
+    
+    addToViewHierarchy(typeToSearchView)
+    addToViewHierarchy(emptyResultView)
+  }
+  
+  private func addToViewHierarchy(_ typeToSearchView: TypeToSearchView) {
+    view.addSubview(typeToSearchView)
+    
     let constrains: [NSLayoutConstraint] = [
-      typeToSearchView!.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-      typeToSearchView!.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
-      typeToSearchView!.heightAnchor.constraint(equalToConstant: 100),
-      typeToSearchView!.widthAnchor.constraint(equalToConstant: 200)
+      typeToSearchView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+      typeToSearchView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      typeToSearchView.heightAnchor.constraint(equalToConstant: 100),
+      typeToSearchView.widthAnchor.constraint(equalToConstant: 200)
     ]
     NSLayoutConstraint.activate(constrains)
-    typeToSearchView?.isHidden = true
-    typeToSearchView?.setShadow(withColor: .black, offset: CGSize(width: 0, height: 10), radius: 15, andOpacity: 0.3)
+    typeToSearchView.isHidden = true
+    typeToSearchView.setShadow(withColor: .black, offset: CGSize(width: 0, height: 10), radius: 15, andOpacity: 0.3)
+  }
+  
+  private func addToViewHierarchy(_ typeToSearchView: EmptyResultView) {
+    view.addSubview(emptyResultView)
     
-    // loading message view
-    loadingMessageView = LoadingMessageView.loadFromNib()
-    view.addSubview(loadingMessageView!)
-    loadingMessageView?.pinEdgesTo(superView: view)
-    loadingMessageView?.isHidden = true
+    let constrains: [NSLayoutConstraint] = [
+      emptyResultView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+      emptyResultView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor)
+//      emptyResultView.heightAnchor.constraint(equalToConstant: 100),
+//      emptyResultView.widthAnchor.constraint(equalToConstant: 200)
+    ]
+    NSLayoutConstraint.activate(constrains)
+//    emptyResultView.isHidden = true
   }
   
   private func setupAppearance(of searchBar: UISearchBar) {
@@ -82,60 +163,6 @@ final class PersonsSearchViewController: UIViewController {
       }
     }
     searchBar.resignFirstResponder()
-  }
-  
-  private func bindViewWith<V>(viewModel: V)
-    where V: ViewModelType, V.Input == PersonsSearchViewModel.Input, V.Output == PersonsSearchViewModel.Output {
-      
-      let searchText = searchBar.rx.text.asObservable().filterNil()
-      let input = PersonsSearchViewModel.Input(searchText: searchText,
-                                               itemWasSelected: didSelectPerson.asObservable())
-      let output = viewModel.transform(input: input)
-      
-      output.persons
-        .drive(onNext: { [weak self] persons in
-          let greaterThanZeroElements = persons.count > 0
-          self?.typeToSearchView?.isHidden = greaterThanZeroElements
-          self?.pageControl.isHidden = !greaterThanZeroElements
-          self?.collectionView.isHidden = !greaterThanZeroElements
-          
-          self?.typeToSearchView?.setView(hidden: greaterThanZeroElements)
-          self?.pageControl.setView(hidden: !greaterThanZeroElements)
-          self?.collectionView.setView(hidden: !greaterThanZeroElements)
-          
-          self?.pageControl.numberOfPages = persons.count
-          self?.persons = persons
-          self?.searchBar.resignFirstResponder()
-          self?.collectionView.reloadData()
-        })
-        .disposed(by: disposeBag)
-      
-      output.showNetworkError.emit(onNext: { message in
-        self.showErrorAlert(title: nil, message: message)
-      }).disposed(by: disposeBag)
-  }
-  
-  private func bindWith(moduleOutput: PersonsSearchModuleOutput) {
-    // Биндинги для контроллера
-    moduleOutput.showPersonDetails.emit(onNext: { person in
-      let personDetailsViewController = PersonDetailsViewController.instantiateFromStoryboard()
-      personDetailsViewController.configureWith(person: person)
-      self.present(personDetailsViewController, animated: true, completion: nil)
-    }).disposed(by: disposeBag)
-  }
-  
-  private func makeAlertError(title: String?, message: String) -> UIAlertController {
-    let alertController = UIAlertController(title: title,
-                                            message: message,
-                                            preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alertController.addAction(okAction)
-    return alertController
-  }
-  
-  private func showErrorAlert(title: String?, message: String) {
-    let controller = makeAlertError(title: title, message: message)
-    present(controller, animated: true, completion: nil)
   }
   
 }
@@ -158,7 +185,7 @@ extension PersonsSearchViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: PersonCollectionViewCell = collectionView.dequeueCollectionCell(forIndexPath: indexPath)
+    let cell: PersonCollectionViewCell = collectionView.dequeue(forIndexPath: indexPath)
     let person = persons[indexPath.row]
     cell.configureWith(viewModel: person)
     return cell

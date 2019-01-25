@@ -28,10 +28,7 @@ final class PersonDetailsViewController: UIViewController {
   
   private enum RowItem {
     case header(String)
-    // case subHeader(String) если надо
-    case attribute(title: String, value: String) // например Цвет глаз: зеленый
-//    case linkedAtrribute(title: String, value: String) /* например Мир: Tatooine (во view отображается другим цветом
-//     или у ячейки disclosureIndicator.) */
+    case attribute(title: String, value: String)
   }
   
 }
@@ -48,7 +45,6 @@ extension PersonDetailsViewController {
       .attribute(title: LocalizedString.eyeColor, value: person.eyeColor.capitalized),
       .attribute(title: LocalizedString.birthYear, value: person.birthYear.uppercased()),
       .attribute(title: LocalizedString.gender, value: person.gender.capitalized)
-      // .linkedAtrribute(title: "Homeworld", value:)
     ]
     
     configureWith(rowItems: rowItems)
@@ -70,7 +66,6 @@ extension PersonDetailsViewController: UITableViewDataSource {
     switch rowItem {
     case let .header(title): cell.configureTitle(title)
     case let .attribute(title, value): cell.configureTitle(title, withValue: value)
-//    case let .linkedAtrribute(title, value): break
     }
     
     return cell
@@ -91,7 +86,7 @@ extension PersonDetailsViewController: UITableViewDelegate {
 extension PersonDetailsViewController: StoryboardInstantiatable {
   
   static var storyboardName: String {
-    return StoryboardNamed.main.description
+    return StoryboardName.main.description
   }
   
 }

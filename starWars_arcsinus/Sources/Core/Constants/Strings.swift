@@ -72,8 +72,6 @@ internal enum LocalizedString {
   internal static let language = LocalizedString.tr("Localizable", "language")
   /// Length
   internal static let length = LocalizedString.tr("Localizable", "length")
-  /// Loading
-  internal static let loadingMessageLabel = LocalizedString.tr("Localizable", "loading-message-label")
   /// Manufacturer
   internal static let manufacturer = LocalizedString.tr("Localizable", "manufacturer")
   /// Mass
@@ -86,6 +84,8 @@ internal enum LocalizedString {
   internal static let model = LocalizedString.tr("Localizable", "model")
   /// Name
   internal static let name = LocalizedString.tr("Localizable", "name")
+  /// No results for your search.
+  internal static let noResultsForYourSearch = LocalizedString.tr("Localizable", "no-results-for-your-search")
   /// Orbital Period
   internal static let orbitalPeriod = LocalizedString.tr("Localizable", "orbitalPeriod")
   /// Passengers
@@ -118,7 +118,7 @@ internal enum LocalizedString {
   internal static let terrain = LocalizedString.tr("Localizable", "terrain")
   /// Title
   internal static let title = LocalizedString.tr("Localizable", "title")
-  /// Input Text To Find A Charcter
+  /// Input Text To Find A Character
   internal static let typeToSearchLabel = LocalizedString.tr("Localizable", "type-to-search-label")
   /// Vehicle Class
   internal static let vehicleClass = LocalizedString.tr("Localizable", "vehicle-class")

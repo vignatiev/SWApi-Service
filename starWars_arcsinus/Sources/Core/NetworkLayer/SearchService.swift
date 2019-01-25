@@ -12,7 +12,7 @@ import ObjectMapper
 final class SearchService {
   
   static let shared = SearchService()
-  var sessionManager: Session!
+  private var sessionManager: Session!
   
   enum SearchResource: String {
     case films, people, planets, species, starships, vehicles
@@ -63,7 +63,6 @@ final class SearchService {
           result = Result.success(persons)
           
         case .failure(let error):
-          // FIXME: handle all errors
           result = self.responseFailureResult(response: response, error: error)
         }
         completion(result)

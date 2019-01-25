@@ -28,27 +28,60 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     showPersonDetails = _showPersonDetails.asSignal()
   }
   
-  // MARK: ViewModelType Impl
+  // MARK: ViewModelType Implementation
   func transform(input: Input) -> Output {
     input.searchText
       .bind(to: model.searchText)
       .disposed(by: disposeBag)
     
-    let personsOutput = model.persons.asDriver().map {
+    // View Output
+    let sortedPersons = model.persons.asDriver().map {
+      $0.persons.sorted { $0.name < $1.name }
+    }
+    
+    let personsOutput = sortedPersons.map {
       $0.map { PersonViewModel(person: $0) }
     }
     
     let networkErrorOutput = model.networkError.asSignal().map { $0.localizedDescription }
     
+    let pageControlVisible = sortedPersons.map { $0.isNotEmpty }
+    let collectionViewVisible = sortedPersons.map { $0.isNotEmpty }
+    
+    let typeToSearchViewVisible = model.persons.asDriver().map { $0.areLocal && $0.persons.isEmpty }
+    let isEmptyResultViewVisible = model.persons.asDriver().map { !$0.areLocal && $0.persons.isEmpty }
+    
+    let keyboardHidingDelay: Double = 1
+    let textInputTimeStamps = input.searchText.map { _ in Date().timeIntervalSince1970 }
+    let delayedPersonsUpdate = model.persons
+      .map { _ in Void() }
+      .delay(keyboardHidingDelay, scheduler: MainScheduler.instance)
+    
+    let hideKeyboardAfterSearch = delayedPersonsUpdate
+      .withLatestFrom(textInputTimeStamps)
+      .filter { lastInputTimeStamp in
+        let currentTime = Date().timeIntervalSince1970
+        
+        return (currentTime - lastInputTimeStamp) > keyboardHidingDelay
+      }
+      .map { _ in Void() }
+      .asSignal(onErrorJustReturn: Void())
+    
+    // Module Output
     let selectedPerson = input.itemWasSelected
-      .withLatestFrom(model.persons) { index, persons -> Person? in
+      .withLatestFrom(sortedPersons) { index, persons -> Person? in
         return persons[unsafeIndex: index]
       }.filterNil()
     
     selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
     
     return Output(persons: personsOutput,
-                  showNetworkError: networkErrorOutput)
+                  showNetworkError: networkErrorOutput,
+                  hideKeyboardAfterSearch: hideKeyboardAfterSearch,
+                  typeToSearchViewVisible: typeToSearchViewVisible,
+                  pageControlVisivble: pageControlVisible,
+                  collectionViewVisivble: collectionViewVisible,
+                  isEmptyResultViewVisible: isEmptyResultViewVisible)
   }
   
   struct Input {
@@ -59,6 +92,12 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
   struct Output {
     let persons: Driver<[PersonViewModel]>
     let showNetworkError: Signal<String>
+    let hideKeyboardAfterSearch: Signal<Void>
+    
+    let typeToSearchViewVisible: Driver<Bool>
+    let pageControlVisivble: Driver<Bool>
+    let collectionViewVisivble: Driver<Bool>
+    let isEmptyResultViewVisible: Driver<Bool>
   }
   
 }
@@ -94,4 +133,3 @@ extension PersonsSearchViewModel {
   }
   
 }
-

@@ -20,7 +20,7 @@ final class PersonsSearchModel {
   let searchText = PublishRelay<String>()
   
   // Output
-  let persons = BehaviorRelay<[Person]>(value: [])
+  let persons = BehaviorRelay(value: PersonsData(persons: [], areLocal: true))
   let networkError = PublishRelay<ApiError>()
   
   init(personsStorage: PersonsLocalStorage, searchService: SearchService = SearchService.shared) {
@@ -46,13 +46,15 @@ final class PersonsSearchModel {
     invalidText
       .subscribe(onNext: { [weak self] _ in
         guard let self = self else { return }
-        self.persons.accept(Array(self.personsStorage.getAllPersons(sortedBy: \.name)))
+        
+        let persons = self.personsStorage.getAllPersons()
+        self.persons.accept(PersonsData(persons: persons, areLocal: true))
       })
       .disposed(by: disposeBag)
     
     // Загружаем из сети
     validText
-      .debounce(0.25, scheduler: backgroundScheduler)
+      .throttle(0.25, scheduler: backgroundScheduler)
       .flatMapLatest { [unowned self] text -> Single<Result<[Person], ApiError>> in
         // Отправляем новый запрос и отменяем предыдущий
         return self.searchForPersons(withName: text)
@@ -64,8 +66,16 @@ final class PersonsSearchModel {
   private func processPersonsSearchResult(_ result: ApiSearchResult) {
     switch result {
     case .failure(let error): networkError.accept(error)
-    case .success(let persons): self.persons.accept(persons)
+    case .success(let persons):
+      self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
+      
+      personsStorage.updateHistoryWith(persons: Set(persons))
     }
+  }
+  
+  struct PersonsData {
+    let persons: Set<Person>
+    let areLocal: Bool
   }
   
 }
