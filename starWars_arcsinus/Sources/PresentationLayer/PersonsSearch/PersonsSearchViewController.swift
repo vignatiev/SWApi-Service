@@ -72,7 +72,7 @@ final class PersonsSearchViewController: UIViewController {
       output.dataSource.drive(dataSourceLabel.rx.text).disposed(by: disposeBag)
       
       output.hideKeyboardAfterSearch.emit(onNext: { [weak self] in
-        self?.searchBar.resignFirstResponder()
+        self?.hideKeyboard()
       }).disposed(by: disposeBag)
       
       output.showNetworkError.emit(onNext: { message in
@@ -84,10 +84,14 @@ final class PersonsSearchViewController: UIViewController {
     // Биндинги для контроллера
     moduleOutput.showPersonDetails
       .emit(onNext: { person in
-        let personDetailsViewController = PersonDetailsViewController.instantiateFromStoryboard()
-        personDetailsViewController.configureWith(person: person)
-        self.navigationController?.pushViewController(personDetailsViewController, animated: true)
+        let detailsViewController = DetailsViewController.instantiateFromStoryboard()
+        detailsViewController.configureWith(person: person)
+        self.navigationController?.pushViewController(detailsViewController, animated: true)
       }).disposed(by: disposeBag)
+  }
+  
+  private func hideKeyboard() {
+    searchBar.resignFirstResponder()
   }
   
 }
@@ -158,7 +162,7 @@ extension PersonsSearchViewController {
     let subViews = searchBar.allNestedSubviews()
     for view in subViews {
       if let textField = view as? UITextField {
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = #colorLiteral(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1)
         textField.leftViewMode = .unlessEditing
         break
       }

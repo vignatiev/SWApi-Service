@@ -13,7 +13,7 @@
         <!--Persons Search View Controller-->
         <scene sceneID="vx7-HX-OKh">
             <objects>
-                <viewController id="wec-rA-VcT" customClass="PersonsSearchViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="wec-rA-VcT" customClass="PersonsSearchViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N9F-ut-4tp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -50,6 +50,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SAr-VT-TA1" secondAttribute="trailing" id="5TW-Wj-tcw"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="trailing" secondItem="Bqu-3X-jqJ" secondAttribute="trailing" id="MBl-UV-2p3"/>
                             <constraint firstItem="gK6-la-P7M" firstAttribute="bottom" secondItem="dJJ-Fh-Jqd" secondAttribute="bottom" constant="24" id="P4h-rx-YW9"/>
                             <constraint firstItem="SAr-VT-TA1" firstAttribute="leading" secondItem="gK6-la-P7M" secondAttribute="leading" constant="8" id="REd-Rf-MSL"/>
@@ -79,10 +80,10 @@
             </objects>
             <point key="canvasLocation" x="1927.2" y="1.3493253373313345"/>
         </scene>
-        <!--Person Details View Controller-->
+        <!--Details View Controller-->
         <scene sceneID="Uhv-l5-gvL">
             <objects>
-                <viewController storyboardIdentifier="PersonDetailsViewController" id="gAZ-Q0-x0D" customClass="PersonDetailsViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gAZ-Q0-x0D" customClass="DetailsViewController" customModule="starWars_arcsinus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5UN-pq-z90">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

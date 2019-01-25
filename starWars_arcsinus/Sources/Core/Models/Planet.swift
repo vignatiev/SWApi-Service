@@ -19,19 +19,17 @@ struct Planet: ImmutableMappable {
   let terrain: String
   let surfaceWater: String
   let population: String
-//  let residents: [URL]
-//  let films: [URL]
   
   init(map: Map) throws {
     self.name = try map.stringIfNotEmpty("name")
-    self.rotationPeriod = try map.stringIfNotEmpty("rotationPeriod")
-    self.orbitalPeriod = try map.stringIfNotEmpty("orbital_period")
-    self.diameter = try map.stringIfNotEmpty("diameter")
-    self.climate = try map.stringIfNotEmpty("climate")
-    self.gravity = try map.stringIfNotEmpty("gravity")
-    self.terrain = try map.stringIfNotEmpty("terrain")
-    self.surfaceWater = try map.stringIfNotEmpty("surface_water")
-    self.population = try map.stringIfNotEmpty("population")
+    self.rotationPeriod = try map.value("rotation_period")
+    self.orbitalPeriod = try map.value("orbital_period")
+    self.diameter = try map.value("diameter")
+    self.climate = try map.value("climate")
+    self.gravity = try map.value("gravity")
+    self.terrain = try map.value("terrain")
+    self.surfaceWater = try map.value("surface_water")
+    self.population = try map.value("population")
   }
   
 }

@@ -27,7 +27,7 @@ final class PersonsLocalStorage {
       realm.add(realmPerson)
     }
   }
-
+  
   
   func update(person: Person) {
     guard let realmPerson = realm.objects(PersonObject.self).filter("name = %@", person.name).first else {
@@ -49,7 +49,7 @@ final class PersonsLocalStorage {
   }
   
   func getAllPersons() -> Set<Person> {
-    let searchHistory = Set(realm.objects(PersonObject.self).map { $0.asDomain() })
+    let searchHistory = Set(realm.objects(PersonObject.self).compactMap { try? $0.asDomain() })
     return searchHistory
   }
   
@@ -91,6 +91,7 @@ final class PersonObject: Object {
   @objc dynamic var eyeColor: String = ""
   @objc dynamic var birthYear: String = ""
   @objc dynamic var gender: String = ""
+  @objc dynamic var homeworldURL: String = ""
   
   func update(withDomain person: Person) {
     name = person.name
@@ -101,6 +102,7 @@ final class PersonObject: Object {
     eyeColor = person.eyeColor
     birthYear = person.birthYear
     gender = person.gender
+    homeworldURL = person.homeWorldURL.relativeString
   }
   
 }
@@ -114,7 +116,9 @@ extension PersonObject: DomainTransformable {
     update(withDomain: domainInstance)
   }
   
-  func asDomain() -> Person {
+  func asDomain() throws -> Person {
+    let homeWorldURL = try homeworldURL.asURL()
+    
     return Person(name: name,
                   height: height,
                   mass: mass,
@@ -122,7 +126,8 @@ extension PersonObject: DomainTransformable {
                   skinColor: skinColor,
                   eyeColor: eyeColor,
                   birthYear: birthYear,
-                  gender: gender)
+                  gender: gender,
+                  homeWorldURL: homeWorldURL)
   }
   
 }

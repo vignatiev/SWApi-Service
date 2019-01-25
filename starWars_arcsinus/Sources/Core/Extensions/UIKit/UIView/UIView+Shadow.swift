@@ -17,10 +17,4 @@ extension UIView {
     self.layer.shadowColor = color.cgColor
   }
   
-  func setView(hidden: Bool) {
-    UIView.transition(with: self, duration: 0.2, options: .transitionCrossDissolve, animations: {
-      self.isHidden = hidden
-    })
-  }
-  
 }

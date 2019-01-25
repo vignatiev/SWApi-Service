@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonDetailsTableViewCell" rowHeight="123" id="KGk-i7-Jjw" customClass="PersonDetailsTableViewCell" customModule="starWars_arcsinus" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailsTableViewCell" rowHeight="123" id="KGk-i7-Jjw" customClass="DetailsTableViewCell" customModule="starWars_arcsinus" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -45,10 +45,20 @@
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bQ1-ZJ-4fs" secondAttribute="trailing" constant="30" id="xlq-k1-oBb"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure_Indicator" translatesAutoresizingMaskIntoConstraints="NO" id="dyQ-Eh-geN">
+                        <rect key="frame" x="286" y="52.5" width="10" height="14"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="Qkc-nd-E0i"/>
+                            <constraint firstAttribute="height" constant="14" id="Xa4-dx-UP8"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="aFL-7m-3Jr" secondAttribute="trailing" constant="16" id="1yT-uK-MWv"/>
+                    <constraint firstAttribute="trailing" secondItem="dyQ-Eh-geN" secondAttribute="trailing" constant="24" id="hte-ZG-E12"/>
+                    <constraint firstItem="dyQ-Eh-geN" firstAttribute="centerY" secondItem="aFL-7m-3Jr" secondAttribute="centerY" id="nPW-GZ-VNI"/>
                     <constraint firstItem="aFL-7m-3Jr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="pFf-IA-QDB"/>
+                    <constraint firstAttribute="trailing" secondItem="aFL-7m-3Jr" secondAttribute="trailing" constant="16" id="rQe-WN-bz6"/>
                     <constraint firstItem="aFL-7m-3Jr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="rVQ-7m-ny5"/>
                     <constraint firstAttribute="bottom" secondItem="aFL-7m-3Jr" secondAttribute="bottom" constant="16" id="xhm-0T-d7D"/>
                 </constraints>
@@ -56,10 +66,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="containerView" destination="aFL-7m-3Jr" id="DqA-Xy-dMv"/>
+                <outlet property="disclosureIndicatorImageView" destination="dyQ-Eh-geN" id="nAv-CF-Ias"/>
                 <outlet property="titleLabel" destination="15A-IT-kf0" id="7Cp-km-r63"/>
                 <outlet property="valueLabel" destination="bQ1-ZJ-4fs" id="bUD-lK-CnG"/>
             </connections>
             <point key="canvasLocation" x="148.80000000000001" y="5.8470764617691158"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="disclosure_Indicator" width="24" height="39"/>
+    </resources>
 </document>

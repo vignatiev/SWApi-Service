@@ -15,17 +15,13 @@ final class SearchService {
   private var sessionManager: Session!
   
   enum SearchResource: String {
-    case films, people, planets, species, starships, vehicles
+    case people, planets
     
     var value: String {
       let suffix: String
       switch self {
-      case .films: suffix = "films/"
       case .people: suffix = "people/"
       case .planets: suffix = "planets/"
-      case .species: suffix = "species/"
-      case .starships: suffix = "starships/"
-      case .vehicles: suffix = "vehicles/"
       }
       return "api/" + suffix
     }
@@ -34,6 +30,7 @@ final class SearchService {
   
   private init() { }
   
+  @discardableResult
   func getPerson(withName name: String,
                  completion: @escaping(Result<[Person], ApiError>) -> Void) -> DataRequest {
     let url = makeUrl(withPath: SearchResource.people)!
@@ -71,7 +68,41 @@ final class SearchService {
     return request
   }
   
-  func makeUrl(withPath path: SearchResource) -> URL? {
+  @discardableResult
+  func getPlanet(withUrl url: URL,
+                 completion: @escaping(Result<Planet, ApiError>) -> Void) -> DataRequest {
+    
+    let configuration = URLSessionConfiguration.default
+    configuration.timeoutIntervalForRequest = 5
+    configuration.timeoutIntervalForResource = 5
+    
+    sessionManager = Alamofire.Session(configuration: configuration)
+    
+    let request = sessionManager.request(url, method: .get)
+      .validate(statusCode: 200..<300)
+      .responseJSON { [weak self] response in
+        guard let self = self else {
+          return
+        }
+        
+        let result: Result<Planet, ApiError>
+        
+        switch response.result {
+        case .success(let value):
+          guard let planet = try? Mapper<Planet>().map(JSONObject: value) else {
+            return
+          }
+          result = Result.success(planet)
+        case .failure(let error):
+          result = self.responseFailureResult(response: response, error: error)
+        }
+        completion(result)
+    }
+    
+    return request
+  }
+  
+  private func makeUrl(withPath path: SearchResource) -> URL? {
     let urlString = Constants.baseUrl + path.value
     return URL(string: urlString)
   }
@@ -114,7 +145,8 @@ enum ApiError: Error, LocalizedError {
   case mappingError(underlyingError: Error)
   case unknownError(underlyingError: Error?)
   
-  var errorDescription: String? {
+  /// Api error description
+  var errorDescription: String {
     switch self {
     case .clientError: return LocalizedString.errorsClientError
     case .authorizationError: return LocalizedString.errorsAuthError
