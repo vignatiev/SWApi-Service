@@ -39,7 +39,7 @@ final class DetailsTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     selectionStyle = .none
-    containerView.setShadow(withColor: .black, offset: .zero,
+    containerView.setupShadow(withColor: .black, offset: .zero,
                             radius: 10, andOpacity: 0.23)
     
     containerView.layer.cornerRadius = 10

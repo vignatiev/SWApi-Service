@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9B00459E21F8FEE1007E4675 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B00459D21F8FEE1007E4675 /* Preferences.swift */; };
 		9B0045A021F914D2007E4675 /* DomainTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B00459F21F914D2007E4675 /* DomainTransformable.swift */; };
 		9B0045A321F9B515007E4675 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0045A221F9B515007E4675 /* DetailsViewController.swift */; };
 		9B60137D21FAFD0C00D220F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B60137C21FAFD0C00D220F1 /* Assets.xcassets */; };
@@ -54,7 +53,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9B00459D21F8FEE1007E4675 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9B00459F21F914D2007E4675 /* DomainTransformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainTransformable.swift; sourceTree = "<group>"; };
 		9B0045A221F9B515007E4675 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		9B60137C21FAFD0C00D220F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 				9B892AA921F64DFE00A3B58B /* NetworkLayer */,
 				9B892A7221F5EE8300A3B58B /* ViewModelType.swift */,
 				9B892A8021F6025A00A3B58B /* PersonsLocalStorage.swift */,
-				9B00459D21F8FEE1007E4675 /* Preferences.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -556,7 +553,6 @@
 				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
 				9B892A8121F6025A00A3B58B /* PersonsLocalStorage.swift in Sources */,
 				9B892A6E21F5EC6B00A3B58B /* ObjectMapper+Map.swift in Sources */,
-				9B00459E21F8FEE1007E4675 /* Preferences.swift in Sources */,
 				9B6B83C321F311D300554D2D /* Person.swift in Sources */,
 				9BCB669421F9E233000E92D6 /* TypeToSearchView.swift in Sources */,
 				9BFE55A721FAE20800F0EAF8 /* Rx+UIViewVisible.swift in Sources */,
