@@ -18,7 +18,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
   private let model: PersonsSearchModel
   private let disposeBag = DisposeBag()
   
-  // PersonsSearchModuleOutput Properties
+  // MARK: PersonsSearchModuleOutput Properties
   let showPersonDetails: Signal<Person>
   private let _showPersonDetails = PublishRelay<Person>()
   
@@ -115,6 +115,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
 
 extension PersonsSearchViewModel {
   
+  // MARK: - PersonViewModel
   struct PersonViewModel {
     
     let name: Field

@@ -6,6 +6,9 @@
 "errors-network-error" = "No internet connection or very low connection speed.";
 "errors-unknown-error" = "An unknown network error has occurred.";
 
+// Common
+"ok-button-title" = "OK";
+
 // Person fields
 "name" = "Name";
 "height" = "Height";
@@ -70,8 +73,8 @@
 // Type to search view
 "type-to-search-label" = "Input Text To Find A Character";
 
-// Nothing found view
-"no-results-for-your-search" = "No results for your search.";
+// Empty result view
+"empty-results-text" = "No results for your search.";
 
 // Persons Search View Controller
 "person-search-source-local" = "Recent Viewed";

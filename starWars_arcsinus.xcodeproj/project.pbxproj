@@ -387,7 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				9BCB669A21F9FDA0000E92D6 /* TypeToSearch */,
-				9BFE55AA21FAE69A00F0EAF8 /* NothingFound */,
+				9BFE55AA21FAE69A00F0EAF8 /* EmptyResult */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -401,13 +401,13 @@
 			path = TypeToSearch;
 			sourceTree = "<group>";
 		};
-		9BFE55AA21FAE69A00F0EAF8 /* NothingFound */ = {
+		9BFE55AA21FAE69A00F0EAF8 /* EmptyResult */ = {
 			isa = PBXGroup;
 			children = (
 				9BFE55A821FAE69500F0EAF8 /* EmptyResultView.swift */,
 				9BFE55AB21FAE6AB00F0EAF8 /* EmptyResultView.xib */,
 			);
-			path = NothingFound;
+			path = EmptyResult;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

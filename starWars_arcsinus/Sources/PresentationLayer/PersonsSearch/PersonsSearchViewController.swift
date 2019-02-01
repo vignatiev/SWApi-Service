@@ -103,7 +103,7 @@ extension PersonsSearchViewController {
     let alertController = UIAlertController(title: title,
                                             message: message,
                                             preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    let okAction = UIAlertAction(title: LocalizedString.okButtonTitle, style: .default, handler: nil)
     alertController.addAction(okAction)
     return alertController
   }

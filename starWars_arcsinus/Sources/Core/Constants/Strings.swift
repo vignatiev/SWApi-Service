@@ -36,6 +36,8 @@ internal enum LocalizedString {
   internal static let diameter = LocalizedString.tr("Localizable", "diameter")
   /// Director
   internal static let director = LocalizedString.tr("Localizable", "director")
+  /// No results for your search.
+  internal static let emptyResultsText = LocalizedString.tr("Localizable", "empty-results-text")
   /// Episode number
   internal static let episodeId = LocalizedString.tr("Localizable", "episode-id")
   /// An authorization error has occurred.
@@ -86,8 +88,8 @@ internal enum LocalizedString {
   internal static let model = LocalizedString.tr("Localizable", "model")
   /// Name
   internal static let name = LocalizedString.tr("Localizable", "name")
-  /// No results for your search.
-  internal static let noResultsForYourSearch = LocalizedString.tr("Localizable", "no-results-for-your-search")
+  /// OK
+  internal static let okButtonTitle = LocalizedString.tr("Localizable", "ok-button-title")
   /// Orbital Period
   internal static let orbitalPeriod = LocalizedString.tr("Localizable", "orbitalPeriod")
   /// Passengers

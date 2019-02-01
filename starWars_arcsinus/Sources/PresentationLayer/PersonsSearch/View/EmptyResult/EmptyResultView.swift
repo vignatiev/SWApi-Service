@@ -16,6 +16,10 @@ final class EmptyResultView: UIView {
   override func awakeFromNib() {
     super.awakeFromNib()
     
+    imageView.contentMode = .scaleToFill
+    imageView.alpha = 0.9
+    
+    noResultsLabel.text = LocalizedString.emptyResultsText
     noResultsLabel.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
   }
 
