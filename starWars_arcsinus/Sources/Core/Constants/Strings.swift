@@ -36,7 +36,7 @@ internal enum LocalizedString {
   internal static let diameter = LocalizedString.tr("Localizable", "diameter")
   /// Director
   internal static let director = LocalizedString.tr("Localizable", "director")
-  /// No results for your search.
+  /// No results for your search
   internal static let emptyResultsText = LocalizedString.tr("Localizable", "empty-results-text")
   /// Episode number
   internal static let episodeId = LocalizedString.tr("Localizable", "episode-id")
@@ -96,7 +96,9 @@ internal enum LocalizedString {
   internal static let passengers = LocalizedString.tr("Localizable", "passengers")
   /// People
   internal static let people = LocalizedString.tr("Localizable", "people")
-  /// Recent Viewed
+  /// Type here
+  internal static let personSearchSearchBarPlaceholder = LocalizedString.tr("Localizable", "person-search-search-bar-placeholder")
+  /// Recently Viewed
   internal static let personSearchSourceLocal = LocalizedString.tr("Localizable", "person-search-source-local")
   /// Search
   internal static let personSearchSourceResponse = LocalizedString.tr("Localizable", "person-search-source-response")

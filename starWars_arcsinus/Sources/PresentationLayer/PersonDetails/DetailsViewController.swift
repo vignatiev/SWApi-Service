@@ -129,6 +129,7 @@ extension DetailsViewController: DetailsConfigurable {
     viewModel.delegate = self
     configureWith(viewModel: viewModel)
   }
+  
 }
 
 //

@@ -69,7 +69,7 @@ final class PersonsSearchModel {
     case .success(let persons):
       self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
       
-      personsStorage.updateHistoryWith(persons: Set(persons))
+//      personsStorage.updateHistoryWith(persons: Set(persons))
     }
   }
   

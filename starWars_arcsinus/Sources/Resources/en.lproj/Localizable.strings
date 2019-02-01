@@ -74,11 +74,12 @@
 "type-to-search-label" = "Input Text To Find A Character";
 
 // Empty result view
-"empty-results-text" = "No results for your search.";
+"empty-results-text" = "No results for your search";
 
 // Persons Search View Controller
-"person-search-source-local" = "Recent Viewed";
+"person-search-source-local" = "Recently Viewed";
 "person-search-source-response" = "Search";
+"person-search-search-bar-placeholder" = "Type here";
 
 // Details View Controller
 "details-title" = "Details";

@@ -157,6 +157,7 @@ extension PersonsSearchViewController {
   }
   
   private func setupAppearance(of searchBar: UISearchBar) {
+    searchBar.placeholder = LocalizedString.personSearchSearchBarPlaceholder
     searchBar.sizeToFit()
     searchBar.becomeFirstResponder()
     let subViews = searchBar.allNestedSubviews()

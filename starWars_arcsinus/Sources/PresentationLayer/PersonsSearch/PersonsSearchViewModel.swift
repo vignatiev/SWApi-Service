@@ -76,7 +76,9 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     // Module Output
     let selectedPerson = input.itemWasSelected
       .withLatestFrom(sortedPersons) { index, persons -> Person? in
-        return persons[unsafeIndex: index]
+        guard let person = persons[unsafeIndex: index] else { return nil }
+        PersonsLocalStorage.shared.create(person: person)
+        return person
       }.filterNil()
     
     selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
