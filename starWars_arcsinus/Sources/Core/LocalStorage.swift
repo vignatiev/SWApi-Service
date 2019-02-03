@@ -23,7 +23,7 @@ extension RealmDomainTransformable where Self: Object {
 class LocalStorage<Model, RealmObject> where Model: Hashable,
 RealmObject: Object & RealmDomainTransformable, RealmObject.DomainType == Model {
   
-  private let realm = try! Realm()
+  private let realm = try! Realm() // swiftlint:disable:this force_try
   
   var uniqueKeyName: String {
     return ""

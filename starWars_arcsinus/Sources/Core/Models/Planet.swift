@@ -8,28 +8,30 @@
 
 import ObjectMapper
 
-struct Planet: ImmutableMappable {
+struct Planet: Mappable {
   
-  let name: String
-  let rotationPeriod: String
-  let orbitalPeriod: String
-  let diameter: String
-  let climate: String
-  let gravity: String
-  let terrain: String
-  let surfaceWater: String
-  let population: String
+  var name: String!
+  var rotationPeriod: String!
+  var orbitalPeriod: String!
+  var diameter: String!
+  var climate: String!
+  var gravity: String!
+  var terrain: String!
+  var surfaceWater: String!
+  var population: String!
   
-  init(map: Map) throws {
-    self.name = try map.stringIfNotEmpty("name")
-    self.rotationPeriod = try map.value("rotation_period")
-    self.orbitalPeriod = try map.value("orbital_period")
-    self.diameter = try map.value("diameter")
-    self.climate = try map.value("climate")
-    self.gravity = try map.value("gravity")
-    self.terrain = try map.value("terrain")
-    self.surfaceWater = try map.value("surface_water")
-    self.population = try map.value("population")
+  init?(map: Map) { }
+  
+  mutating func mapping(map: Map) {
+    self.name <- map["name"]
+    self.rotationPeriod <- map["rotation_period"]
+    self.orbitalPeriod <- map["orbital_period"]
+    self.diameter <- map["diameter"]
+    self.climate <- map["climate"]
+    self.gravity <- map["gravity"]
+    self.terrain <- map["terrain"]
+    self.surfaceWater <- map["surface_water"]
+    self.population <- map["population"]
   }
   
 }

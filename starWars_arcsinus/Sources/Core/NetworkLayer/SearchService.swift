@@ -53,10 +53,10 @@ final class SearchService {
         
         switch response.result {
         case .success(let value):
-          guard let searchResponse = try? Mapper<PersonsSearchResponse>().map(JSONObject: value) else {
-            return
+          guard let searchResponse = Mapper<PersonsSearchResponse>().map(JSONObject: value),
+            let persons = searchResponse.persons else {
+              return
           }
-          let persons = searchResponse.persons
           result = Result.success(persons)
           
         case .failure(let error):
@@ -89,7 +89,7 @@ final class SearchService {
         
         switch response.result {
         case .success(let value):
-          guard let planet = try? Mapper<Planet>().map(JSONObject: value) else {
+          guard let planet = Mapper<Planet>().map(JSONObject: value) else {
             return
           }
           result = Result.success(planet)

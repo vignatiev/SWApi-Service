@@ -13,14 +13,14 @@ final class PersonsLocalStorage: LocalStorage<Person, PersonObject> {
   static let shared = PersonsLocalStorage()
   
   override var uniqueKeyName: String { return "name" }
-  override var uniqueKeyPath: PartialKeyPath<Person> { return \.name }
+  override var uniqueKeyPath: PartialKeyPath<Person> { return \Person.name as PartialKeyPath<Person> }
 }
 
 // MARK: Realm Data Structures
 final class PersonObject: Object {
   
   @objc dynamic var name: String = ""
-  @objc dynamic var height: Int = 0
+  @objc dynamic var height: String = ""
   @objc dynamic var mass: String = ""
   @objc dynamic var hairColor: String = ""
   @objc dynamic var skinColor: String = ""

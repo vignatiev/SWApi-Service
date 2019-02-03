@@ -124,7 +124,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     let pageControlVisivble: Driver<Bool>
     let collectionViewVisivble: Driver<Bool>
     let isEmptyResultViewVisible: Driver<Bool>
-    let isDataSourceLabelVisible: Driver<Bool> // FIXME: Rename
+    let isDataSourceLabelVisible: Driver<Bool>
     
     let dataSource: Driver<String>
   }

@@ -6,6 +6,8 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+
 import UIKit
 
 public protocol StoryboardInstantiatable: class {

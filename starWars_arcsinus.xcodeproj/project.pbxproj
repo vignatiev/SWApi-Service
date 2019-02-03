@@ -22,7 +22,6 @@
 		9B892A6421F5EB3700A3B58B /* UIView+AllNestedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A6321F5EB3700A3B58B /* UIView+AllNestedViews.swift */; };
 		9B892A6721F5EB8100A3B58B /* Collection+IsNotEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A6621F5EB8100A3B58B /* Collection+IsNotEmpty.swift */; };
 		9B892A6B21F5EC1600A3B58B /* Array+UnsafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A6A21F5EC1600A3B58B /* Array+UnsafeIndex.swift */; };
-		9B892A6E21F5EC6B00A3B58B /* ObjectMapper+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A6D21F5EC6B00A3B58B /* ObjectMapper+Map.swift */; };
 		9B892A7121F5ECDD00A3B58B /* Rx+FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A7021F5ECDD00A3B58B /* Rx+FilterNil.swift */; };
 		9B892A7321F5EE8300A3B58B /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A7221F5EE8300A3B58B /* ViewModelType.swift */; };
 		9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A7721F5F1EA00A3B58B /* UITableView+Register.swift */; };
@@ -76,7 +75,6 @@
 		9B892A6321F5EB3700A3B58B /* UIView+AllNestedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AllNestedViews.swift"; sourceTree = "<group>"; };
 		9B892A6621F5EB8100A3B58B /* Collection+IsNotEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+IsNotEmpty.swift"; sourceTree = "<group>"; };
 		9B892A6A21F5EC1600A3B58B /* Array+UnsafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+UnsafeIndex.swift"; sourceTree = "<group>"; };
-		9B892A6D21F5EC6B00A3B58B /* ObjectMapper+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObjectMapper+Map.swift"; sourceTree = "<group>"; };
 		9B892A7021F5ECDD00A3B58B /* Rx+FilterNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+FilterNil.swift"; sourceTree = "<group>"; };
 		9B892A7221F5EE8300A3B58B /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		9B892A7721F5F1EA00A3B58B /* UITableView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
@@ -231,7 +229,6 @@
 			children = (
 				9B892A6821F5EBF600A3B58B /* Foundation */,
 				9B892A7521F5F1CF00A3B58B /* UIKit */,
-				9B892A6C21F5EC4000A3B58B /* ObjectMapper */,
 				9B892A6F21F5ECCC00A3B58B /* Rx */,
 			);
 			path = Extensions;
@@ -284,14 +281,6 @@
 				9B892A6A21F5EC1600A3B58B /* Array+UnsafeIndex.swift */,
 			);
 			path = Array;
-			sourceTree = "<group>";
-		};
-		9B892A6C21F5EC4000A3B58B /* ObjectMapper */ = {
-			isa = PBXGroup;
-			children = (
-				9B892A6D21F5EC6B00A3B58B /* ObjectMapper+Map.swift */,
-			);
-			path = ObjectMapper;
 			sourceTree = "<group>";
 		};
 		9B892A6F21F5ECCC00A3B58B /* Rx */ = {
@@ -531,7 +520,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftgen >/dev/null; then\nswiftgen\nelse\necho \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
+			shellScript = "if which swiftgen >/dev/null; then\n    swiftgen\nelse\n    echo \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -555,7 +544,6 @@
 				9B892A7821F5F1EA00A3B58B /* UITableView+Register.swift in Sources */,
 				9B6B83BA21F3035B00554D2D /* Strings.swift in Sources */,
 				9B892A8121F6025A00A3B58B /* PersonsLocalStorage.swift in Sources */,
-				9B892A6E21F5EC6B00A3B58B /* ObjectMapper+Map.swift in Sources */,
 				9B6B83C321F311D300554D2D /* Person.swift in Sources */,
 				9BCB669421F9E233000E92D6 /* TypeToSearchView.swift in Sources */,
 				9BFE55A721FAE20800F0EAF8 /* Rx+UIViewVisible.swift in Sources */,

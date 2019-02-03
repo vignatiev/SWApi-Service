@@ -236,7 +236,6 @@ final class PlanetViewModelAdapter: DetailsViewModelAdapter {
     self.rowItems = rowItems
   }
   
-  func didSelectRowAt(index: IndexPath) {
-  }
+  func didSelectRowAt(index: IndexPath) { }
   
 }
