@@ -9,75 +9,11 @@
 import Foundation
 import RealmSwift
 
-final class PersonsLocalStorage {
-  
+final class PersonsLocalStorage: LocalStorage<Person, PersonObject> {
   static let shared = PersonsLocalStorage()
-  private let realm = try! Realm()
   
-  private init() { }
-  
-  func create(person: Person) {
-    if realm.objects(PersonObject.self).filter("name = %@", person.name).first != nil {
-      return
-    }
-    
-    let realmPerson = PersonObject(with: person)
-    
-    realm.realmWrite {
-      realm.add(realmPerson)
-    }
-  }
-  
-  
-  func update(person: Person) {
-    guard let realmPerson = realm.objects(PersonObject.self).filter("name = %@", person.name).first else {
-      return
-    }
-    
-    realm.realmWrite {
-      realmPerson.update(withDomain: person)
-    }
-  }
-  
-  func delete(person: Person) {
-    guard let realmPerson = realm.objects(PersonObject.self).filter("name = %@", person.name).first else {
-      return
-    }
-    realm.realmWrite {
-      realm.delete(realmPerson)
-    }
-  }
-  
-  func getAllPersons() -> Set<Person> {
-    let searchHistory = Set(realm.objects(PersonObject.self).compactMap { try? $0.asDomain() })
-    return searchHistory
-  }
-  
-}
-
-extension PersonsLocalStorage {
-  
-  func updateHistoryWith(persons: Set<Person>) {
-    let history = getAllPersons()
-    
-    for person in persons {
-      if history.contains(person) {
-        update(person: person)
-      } else {
-        create(person: person)
-      }
-    }
-    
-  }
-  
-  func getAllPersons(sortedBy keyPath: KeyPath<Person, String>) -> [Person] {
-    return getAllPersons().sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
-  }
-  
-  func getPersons(with keyPath: KeyPath<Person, String>, equalTo value: String) -> Set<Person> {
-    return getAllPersons().filter { $0[keyPath: keyPath] == value }
-  }
-  
+  override var uniqueKeyName: String { return "name" }
+  override var uniqueKeyPath: PartialKeyPath<Person> { return \.name }
 }
 
 // MARK: Realm Data Structures
@@ -93,7 +29,7 @@ final class PersonObject: Object {
   @objc dynamic var gender: String = ""
   @objc dynamic var homeworldURL: String = ""
   
-  func update(withDomain person: Person) {
+  func updateData(withDomain person: Person) {
     name = person.name
     height = person.height
     mass = person.mass
@@ -107,14 +43,9 @@ final class PersonObject: Object {
   
 }
 
-extension PersonObject: DomainTransformable {
-  typealias DomainType = Person
+extension PersonObject: RealmDomainTransformable {
   
-  convenience init(with domainInstance: Person) {
-    self.init()
-    
-    update(withDomain: domainInstance)
-  }
+  typealias DomainType = Person
   
   func asDomain() throws -> Person {
     let homeWorldURL = try homeworldURL.asURL()

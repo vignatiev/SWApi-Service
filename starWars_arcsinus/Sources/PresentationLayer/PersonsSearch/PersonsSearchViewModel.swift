@@ -57,41 +57,57 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
         return $0.areLocal ? LocalizedString.personSearchSourceLocal : LocalizedString.personSearchSourceResponse
       }.map { $0.uppercased() }
     
-    let keyboardHidingDelay: Double = 1
-    let textInputTimeStamps = input.searchText.map { _ in Date().timeIntervalSince1970 }
-    let delayedPersonsUpdate = model.persons
-      .map { _ in Void() }
-      .delay(keyboardHidingDelay, scheduler: MainScheduler.instance)
+    let contentAbsenceViewVisibile = Observable
+      .combineLatest(typeToSearchViewVisible.asObservable(), isEmptyResultViewVisible.asObservable())
+      .map { $0 || $1 }
     
-    let hideKeyboardAfterSearch = delayedPersonsUpdate
-      .withLatestFrom(textInputTimeStamps)
-      .filter { lastInputTimeStamp in
-        let currentTime = Date().timeIntervalSince1970
-        
-        return (currentTime - lastInputTimeStamp) > keyboardHidingDelay
-      }
-      .map { _ in Void() }
-      .asSignal(onErrorJustReturn: Void())
+    let hideKeyboard = hideKeyboardAfterSearch(searchText: input.searchText,
+                                               contentAbsenceViewVisibile: contentAbsenceViewVisibile)
     
     // Module Output
     let selectedPerson = input.itemWasSelected
       .withLatestFrom(sortedPersons) { index, persons -> Person? in
-        guard let person = persons[unsafeIndex: index] else { return nil }
-        PersonsLocalStorage.shared.create(person: person)
-        return person
+        return persons[unsafeIndex: index]
       }.filterNil()
     
     selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
+    selectedPerson.bind(to: model.didSelectPerson).disposed(by: disposeBag)
     
     return Output(persons: personsOutput,
                   showNetworkError: networkErrorOutput,
-                  hideKeyboardAfterSearch: hideKeyboardAfterSearch,
+                  hideKeyboardAfterSearch: hideKeyboard,
                   typeToSearchViewVisible: typeToSearchViewVisible,
                   pageControlVisivble: pageControlVisible,
                   collectionViewVisivble: collectionViewVisible,
                   isEmptyResultViewVisible: isEmptyResultViewVisible,
                   isDataSourceLabelVisible: isDataSourceLabelVisible,
                   dataSource: dataSource)
+  }
+  
+  private func hideKeyboardAfterSearch(searchText: Observable<String>,
+                                       contentAbsenceViewVisibile: Observable<Bool>) -> Signal<Void> {
+    // Если результаты поиска или история просмотренных персонажей пусты, то клавиатура не прячется
+    let keyboardHidingDelay: Double = 1
+    let textInputTimeStamps = searchText.map { _ in Date().timeIntervalSince1970 }
+    let delayedPersonsUpdate = model.persons
+      .map { _ in Void() }
+      .delay(keyboardHidingDelay, scheduler: MainScheduler.instance)
+    
+    let hideKeyboardTrigger = delayedPersonsUpdate
+      .withLatestFrom(textInputTimeStamps)
+      .filter { lastInputTimeStamp in
+        let currentTime = Date().timeIntervalSince1970
+        
+        return (currentTime - lastInputTimeStamp) > keyboardHidingDelay
+    }
+    
+    let hideKeyboard = hideKeyboardTrigger
+      .withLatestFrom(contentAbsenceViewVisibile)
+      .filter { $0 == false }
+      .map { _ in Void() }
+      .asSignal(onErrorJustReturn: Void())
+    
+    return hideKeyboard
   }
   
   struct Input {
@@ -108,7 +124,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     let pageControlVisivble: Driver<Bool>
     let collectionViewVisivble: Driver<Bool>
     let isEmptyResultViewVisible: Driver<Bool>
-    let isDataSourceLabelVisible: Driver<Bool>
+    let isDataSourceLabelVisible: Driver<Bool> // FIXME: Rename
     
     let dataSource: Driver<String>
   }

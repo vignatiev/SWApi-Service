@@ -12,7 +12,7 @@ final class DetailsViewController: UIViewController {
   
   @IBOutlet private var tableView: UITableView!
   
-  private var rowItems = [RowItem]()
+  private var rowItems = [DetailsViewModelRowItem]()
   
   private var viewModel: DetailsViewModelAdapter?
   
@@ -39,11 +39,6 @@ final class DetailsViewController: UIViewController {
     tableView.reloadData()
   }
   
-  enum RowItem {
-    case header(String)
-    case attribute(title: String, value: String)
-    case linkedAttribute(title: String)
-  }
 }
 
 // MARK: - UITableViewDataSource
@@ -160,13 +155,19 @@ extension DetailsViewController: DetailsViewModelAdapterDelegate {
 }
 
 // MARK: - Adapters
-protocol DetailsViewModelAdapter {
+protocol DetailsViewModelAdapter: AnyObject {
   
   var delegate: DetailsViewModelAdapterDelegate? { get set }
-  var rowItems: [DetailsViewController.RowItem] { get }
+  var rowItems: [DetailsViewModelRowItem] { get }
   
   func didSelectRowAt(index: IndexPath)
   
+}
+
+enum DetailsViewModelRowItem {
+  case header(String)
+  case attribute(title: String, value: String)
+  case linkedAttribute(title: String)
 }
 
 final class PersonViewModelAdapter: DetailsViewModelAdapter {
@@ -176,10 +177,10 @@ final class PersonViewModelAdapter: DetailsViewModelAdapter {
   private let person: Person
   
   weak var delegate: DetailsViewModelAdapterDelegate?
-  let rowItems: [DetailsViewController.RowItem]
+  let rowItems: [DetailsViewModelRowItem]
   
   init(model: Person) {
-    let rowItems: [DetailsViewController.RowItem] = [
+    let rowItems: [DetailsViewModelRowItem] = [
       .attribute(title: LocalizedString.name, value: model.name.uppercased()),
       .attribute(title: LocalizedString.height, value: String(model.height)),
       .attribute(title: LocalizedString.mass, value: model.mass),
@@ -217,10 +218,10 @@ final class PlanetViewModelAdapter: DetailsViewModelAdapter {
   typealias Model = Planet
   
   weak var delegate: DetailsViewModelAdapterDelegate?
-  let rowItems: [DetailsViewController.RowItem]
+  let rowItems: [DetailsViewModelRowItem]
   
   init(model: Planet) {
-    let rowItems: [DetailsViewController.RowItem] = [
+    let rowItems: [DetailsViewModelRowItem] = [
       .attribute(title: LocalizedString.name, value: model.name.uppercased()),
       .attribute(title: LocalizedString.rotationPeriod, value: model.rotationPeriod.uppercased()),
       .attribute(title: LocalizedString.orbitalPeriod, value: model.orbitalPeriod.uppercased()),

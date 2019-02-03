@@ -18,6 +18,7 @@ final class PersonsSearchModel {
   
   // Input
   let searchText = PublishRelay<String>()
+  let didSelectPerson = PublishRelay<Person>()
   
   // Output
   let persons = BehaviorRelay(value: PersonsData(persons: [], areLocal: true))
@@ -31,6 +32,10 @@ final class PersonsSearchModel {
   }
   
   private func configureBindings() {
+    didSelectPerson.subscribe(onNext: { [weak personsStorage] person in
+      try? personsStorage?.create(entity: person)
+    }).disposed(by: disposeBag)
+    
     let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
     let invalidText = searchText
@@ -47,14 +52,14 @@ final class PersonsSearchModel {
       .subscribe(onNext: { [weak self] _ in
         guard let self = self else { return }
         
-        let persons = self.personsStorage.getAllPersons()
+        let persons = self.personsStorage.getAllEntities()
         self.persons.accept(PersonsData(persons: persons, areLocal: true))
       })
       .disposed(by: disposeBag)
     
     // Загружаем из сети
     validText
-      .throttle(0.25, scheduler: backgroundScheduler)
+      .debounce(0.45, scheduler: backgroundScheduler)
       .flatMapLatest { [unowned self] text -> Single<Result<[Person], ApiError>> in
         // Отправляем новый запрос и отменяем предыдущий
         return self.searchForPersons(withName: text)
@@ -66,10 +71,7 @@ final class PersonsSearchModel {
   private func processPersonsSearchResult(_ result: ApiSearchResult) {
     switch result {
     case .failure(let error): networkError.accept(error)
-    case .success(let persons):
-      self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
-      
-//      personsStorage.updateHistoryWith(persons: Set(persons))
+    case .success(let persons): self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
     }
   }
   
@@ -98,4 +100,3 @@ extension PersonsSearchModel {
   }
   
 }
-
