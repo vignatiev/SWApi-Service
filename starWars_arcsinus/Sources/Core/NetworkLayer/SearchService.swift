@@ -12,7 +12,8 @@ import ObjectMapper
 final class SearchService {
   
   static let shared = SearchService()
-  private var sessionManager: Session!
+  
+  private var sessions: [ObjectIdentifier: Session] = [:]
   
   enum SearchResource: String {
     case people, planets
@@ -40,24 +41,27 @@ final class SearchService {
     configuration.timeoutIntervalForRequest = 5
     configuration.timeoutIntervalForResource = 5
     
-    sessionManager = Alamofire.Session(configuration: configuration)
+    let session = Alamofire.Session(configuration: configuration)
+    addSession(session)
     
-    let request = sessionManager.request(url, method: .get, parameters: parameters)
+    let request = session.request(url, method: .get, parameters: parameters)
       .validate(statusCode: 200..<300)
       .responseJSON { [weak self] response in
         guard let self = self else {
           return
         }
         
+        self.removeSession(session)
+        
         let result: Result<[Person], ApiError>
         
         switch response.result {
         case .success(let value):
-          guard let searchResponse = Mapper<PersonsSearchResponse>().map(JSONObject: value),
-            let persons = searchResponse.persons else {
-              return
+          guard let searchResponse = Mapper<PersonsSearchResponse>().map(JSONObject: value) else {
+            return
           }
-          result = Result.success(persons)
+          let persons = searchResponse.persons
+          result = Result.success(persons!)
           
         case .failure(let error):
           result = self.responseFailureResult(response: response, error: error)
@@ -68,6 +72,14 @@ final class SearchService {
     return request
   }
   
+  private func addSession(_ session: Session) {
+    sessions[ObjectIdentifier(session)] = session
+  }
+  
+  private func removeSession(_ session: Session) {
+    sessions[ObjectIdentifier(session)] = nil
+  }
+  
   @discardableResult
   func getPlanet(withUrl url: URL,
                  completion: @escaping(Result<Planet, ApiError>) -> Void) -> DataRequest {
@@ -76,14 +88,17 @@ final class SearchService {
     configuration.timeoutIntervalForRequest = 5
     configuration.timeoutIntervalForResource = 5
     
-    sessionManager = Alamofire.Session(configuration: configuration)
+    let session = Alamofire.Session(configuration: configuration)
+    addSession(session)
     
-    let request = sessionManager.request(url, method: .get)
+    let request = session.request(url, method: .get)
       .validate(statusCode: 200..<300)
       .responseJSON { [weak self] response in
         guard let self = self else {
           return
         }
+        
+        self.removeSession(session)
         
         let result: Result<Planet, ApiError>
         
