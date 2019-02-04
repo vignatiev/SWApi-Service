@@ -43,7 +43,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
       $0.map { PersonViewModel(person: $0) }
     }
     
-    let networkErrorOutput = model.networkError.asSignal().map { $0.localizedDescription }
+    let networkErrorOutput = model.networkError.asSignal().map { $0.errorDescription }
     
     let pageControlVisible = sortedPersons.map { $0.isNotEmpty }
     let collectionViewVisible = sortedPersons.map { $0.isNotEmpty }
