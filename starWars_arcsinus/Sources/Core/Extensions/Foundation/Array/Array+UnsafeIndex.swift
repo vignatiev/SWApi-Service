@@ -7,12 +7,10 @@
 //
 
 extension Array {
-  
   subscript(unsafeIndex index: Index) -> Iterator.Element? {
     guard indices.contains(index) else {
       return nil
     }
     return self[index]
   }
-  
 }

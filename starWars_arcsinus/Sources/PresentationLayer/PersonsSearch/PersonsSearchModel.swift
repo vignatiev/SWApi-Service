@@ -6,11 +6,10 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 final class PersonsSearchModel {
-  
   private let personsStorage: PersonsLocalStorage
   private let searchService: SearchService
   
@@ -32,9 +31,11 @@ final class PersonsSearchModel {
   }
   
   private func configureBindings() {
-    didSelectPerson.subscribe(onNext: { [weak personsStorage] person in
-      try? personsStorage?.create(entity: person)
-    }).disposed(by: disposeBag)
+    didSelectPerson
+      .subscribe(onNext: { [weak personsStorage] person in
+        try? personsStorage?.create(entity: person)
+      })
+      .disposed(by: disposeBag)
     
     let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
@@ -62,16 +63,20 @@ final class PersonsSearchModel {
       .debounce(0.45, scheduler: backgroundScheduler)
       .flatMapLatest { [unowned self] text -> Single<Result<[Person], ApiError>> in
         // Отправляем новый запрос и отменяем предыдущий
-        return self.searchForPersons(withName: text)
-      }.subscribe(onNext: { [weak self] result in
+        self.searchForPersons(withName: text)
+      }
+      .subscribe(onNext: { [weak self] result in
         self?.processPersonsSearchResult(result)
-      }).disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func processPersonsSearchResult(_ result: ApiSearchResult) {
     switch result {
-    case .failure(let error): networkError.accept(error)
-    case .success(let persons): self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
+    case .failure(let error):
+      networkError.accept(error)
+    case .success(let persons):
+      self.persons.accept(PersonsData(persons: Set(persons), areLocal: false))
     }
   }
   
@@ -79,11 +84,9 @@ final class PersonsSearchModel {
     let persons: Set<Person>
     let areLocal: Bool
   }
-  
 }
 
 extension PersonsSearchModel {
-  
   private typealias ApiSearchResult = Result<[Person], ApiError>
   
   private func searchForPersons(withName name: String) -> Single<ApiSearchResult> {
@@ -98,5 +101,4 @@ extension PersonsSearchModel {
       }
     })
   }
-  
 }

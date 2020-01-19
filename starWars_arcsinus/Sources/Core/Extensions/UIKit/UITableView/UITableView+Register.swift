@@ -8,9 +8,11 @@
 
 import UIKit
 
+typealias RegisterableCell = TableViewRegisterable & NibLoadable
+
 /// Defines something that can be dequeued from a table view using a reuseIdentifier
 /// A cell that is defined in a storyboard should implement this.
-public protocol TableViewDequeuable: class {
+public protocol TableViewDequeuable: AnyObject {
   static var reuseIdentifier: String { get }
 }
 
@@ -33,55 +35,53 @@ public extension TableViewRegisterable where Self: UITableViewHeaderFooterView {
 }
 
 // MARK: - UITableView
+
 public extension UITableView {
-  
   func dequeue<T: UITableViewCell>(forIndexPath indexPath: IndexPath) -> T where T: TableViewDequeuable {
     guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
       fatalError("Could not dequeue cell with identifier \(T.reuseIdentifier)")
     }
     return cell
   }
-  
-  func dequeue<T: UITableViewHeaderFooterView> () -> T? where T: TableViewDequeuable {
+
+  func dequeue<T: UITableViewHeaderFooterView>() -> T? where T: TableViewDequeuable {
     return dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T
   }
-  
+
   func register<T: UITableViewCell>(_ cellType: T.Type) where T: TableViewRegisterable {
     register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
   }
-  
+
   func register<T: UITableViewCell>(_ cellType: T.Type) where T: TableViewRegisterable, T: NibLoadable {
     register(T.nib(), forCellReuseIdentifier: T.reuseIdentifier)
   }
-  
+
   func register<T: UITableViewHeaderFooterView>(_ headerFooterType: T.Type) where T: TableViewRegisterable {
     register(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
   }
-  
+
   func register<T: UITableViewHeaderFooterView>(_ headerFooterType: T.Type)
     where T: TableViewRegisterable, T: NibLoadable {
-      register(T.nib(), forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
+    register(T.nib(), forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
   }
-  
 }
 
 // MARK: - UICollectionView
+
 public extension UICollectionView {
-  
   func dequeue<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath)
     -> T where T: TableViewDequeuable {
-      guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-        fatalError("Could not dequeue cell with identifier \(T.reuseIdentifier)")
-      }
-      return cell
+    guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+      fatalError("Could not dequeue cell with identifier \(T.reuseIdentifier)")
+    }
+    return cell
   }
-  
+
   func register<T: UICollectionViewCell>(_ cellType: T.Type) where T: TableViewRegisterable {
     register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
   }
-  
+
   func register<T: UICollectionViewCell>(_ cellType: T.Type) where T: TableViewRegisterable, T: NibLoadable {
     register(T.nib(), forCellWithReuseIdentifier: T.reuseIdentifier)
   }
-  
 }

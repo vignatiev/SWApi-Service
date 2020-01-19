@@ -6,35 +6,32 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class PersonsSearchViewController: UIViewController {
-  
   @IBOutlet private var collectionView: UICollectionView!
   @IBOutlet private var searchBar: UISearchBar!
   @IBOutlet private var pageControl: UIPageControl!
   @IBOutlet private var dataSourceLabel: UILabel!
   
-  private let typeToSearchView = TypeToSearchView.loadFromNib()
-  private let emptyResultView = EmptyResultView.loadFromNib()
+  private lazy var typeToSearchView = TypeToSearchView.loadFromNib()
+  private lazy var emptyResultView = EmptyResultView.loadFromNib()
   
   private var viewModel: AnyObject?
   
   private let didSelectPerson = PublishRelay<Int>()
   private let disposeBag = DisposeBag()
   
-  private var persons: [PersonsSearchViewModel.PersonViewModel] = []
+  private let persons = BehaviorRelay<[PersonsSearchViewModel.PersonViewModel]>(value: [])
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configureUI()
     
     let model = PersonsSearchModel(personsStorage: PersonsLocalStorage.shared)
     let viewModel = PersonsSearchViewModel(model: model)
-    
     configureWith(viewModel: viewModel)
   }
   
@@ -43,41 +40,47 @@ final class PersonsSearchViewController: UIViewController {
     
     bindViewWith(viewModel: viewModel)
     bindWith(moduleOutput: viewModel)
+    
+    bindDataSource()
+    bind()
   }
   
   private func bindViewWith<V>(viewModel: V)
-    where V: ViewModelType, V.Input == PersonsSearchViewModel.Input, V.Output == PersonsSearchViewModel.Output {
-      
-      let searchText = searchBar.rx.text.asObservable().filterNil()
-      let input = PersonsSearchViewModel.Input(searchText: searchText,
-                                               itemWasSelected: didSelectPerson.asObservable())
-      let output = viewModel.transform(input: input)
-      
-      output.persons
-        .drive(onNext: { [weak self] persons in
-          
-          self?.pageControl.numberOfPages = persons.count
-          self?.persons = persons
-          self?.collectionView.reloadData()
-        })
-        .disposed(by: disposeBag)
-      
-      output.typeToSearchViewVisible.drive(typeToSearchView.rx.isVisible).disposed(by: disposeBag)
-      output.collectionViewVisivble.drive(collectionView.rx.isVisible).disposed(by: disposeBag)
-      output.pageControlVisivble.drive(pageControl.rx.isVisible).disposed(by: disposeBag)
-      
-      output.isEmptyResultViewVisible.drive(emptyResultView.rx.isVisible).disposed(by: disposeBag)
-      
-      output.isDataSourceLabelVisible.drive(dataSourceLabel.rx.isVisible).disposed(by: disposeBag)
-      output.dataSource.drive(dataSourceLabel.rx.text).disposed(by: disposeBag)
-      
-      output.hideKeyboardAfterSearch.emit(onNext: { [weak self] in
+    where V: ViewModelType,
+    V.Input == PersonsSearchViewModel.Input, V.Output == PersonsSearchViewModel.Output {
+    let searchText = searchBar.rx.text.asObservable().filterNil()
+    let input = PersonsSearchViewModel.Input(searchText: searchText,
+                                             itemWasSelected: didSelectPerson.asObservable())
+    let output = viewModel.transform(input: input)
+    
+    output.persons
+      .do(onNext: { [weak self] in
+        self?.pageControl.numberOfPages = $0.endIndex
+      })
+      .asObservable()
+      .bind(to: persons)
+      .disposed(by: disposeBag)
+    
+    output.typeToSearchViewVisible.drive(typeToSearchView.rx.isVisible).disposed(by: disposeBag)
+    output.collectionViewVisivble.drive(collectionView.rx.isVisible).disposed(by: disposeBag)
+    output.pageControlVisivble.drive(pageControl.rx.isVisible).disposed(by: disposeBag)
+    
+    output.isEmptyResultViewVisible.drive(emptyResultView.rx.isVisible).disposed(by: disposeBag)
+    
+    output.isDataSourceLabelVisible.drive(dataSourceLabel.rx.isVisible).disposed(by: disposeBag)
+    output.dataSource.drive(dataSourceLabel.rx.text).disposed(by: disposeBag)
+    
+    output.hideKeyboardAfterSearch
+      .emit(onNext: { [weak self] in
         self?.hideKeyboard()
-      }).disposed(by: disposeBag)
-      
-      output.showNetworkError.emit(onNext: { message in
-        self.showErrorAlert(title: nil, message: message)
-      }).disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
+    
+    output.showNetworkError
+      .emit(onNext: { [weak self] message in
+        self?.showErrorAlert(title: nil, message: message)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindWith(moduleOutput: PersonsSearchModuleOutput) {
@@ -87,18 +90,40 @@ final class PersonsSearchViewController: UIViewController {
         let detailsViewController = DetailsViewController.instantiateFromStoryboard()
         detailsViewController.configureWith(person: person)
         self.navigationController?.pushViewController(detailsViewController, animated: true)
-      }).disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  private func bind() {
+    collectionView.rx.itemSelected
+      .map { $0.row }
+      .bind(to: didSelectPerson)
+      .disposed(by: disposeBag)
+    
+    collectionView.rx.contentOffset
+      .map { Int($0.x / UIScreen.main.bounds.width) }
+      .distinctUntilChanged()
+      .bind(to: pageControl.rx.currentPage)
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDataSource() {
+    persons.bind(to: collectionView.rx.items) { collectionView, item, person in
+      let cell: PersonCollectionViewCell = collectionView.dequeue(forIndexPath: IndexPath(item: item, section: 0))
+      cell.configureWith(viewModel: person)
+      return cell
+    }
+    .disposed(by: disposeBag)
   }
   
   private func hideKeyboard() {
     searchBar.resignFirstResponder()
   }
-  
 }
 
+// MARK: - Alerts
+
 extension PersonsSearchViewController {
-  // MARK: Alerts
-  
   private func makeAlertError(title: String?, message: String) -> UIAlertController {
     let alertController = UIAlertController(title: title,
                                             message: message,
@@ -112,12 +137,11 @@ extension PersonsSearchViewController {
     let controller = makeAlertError(title: title, message: message)
     present(controller, animated: true, completion: nil)
   }
-  
 }
 
+// MARK: - Initial UI Config
+
 extension PersonsSearchViewController {
-  // MARK: Initial UI Config
-  
   private func configureUI() {
     navigationItem.titleView = searchBar
     
@@ -125,6 +149,7 @@ extension PersonsSearchViewController {
     
     collectionView.register(PersonCollectionViewCell.self)
     collectionView.delaysContentTouches = false
+    collectionView.delegate = self
     
     addToViewHierarchy(typeToSearchView)
     addToViewHierarchy(emptyResultView)
@@ -144,16 +169,16 @@ extension PersonsSearchViewController {
   }
   
   private func addToViewHierarchy(_ typeToSearchView: EmptyResultView) {
-    view.addSubview(emptyResultView)
+    view.addSubview(typeToSearchView)
     
     let constrains: [NSLayoutConstraint] = [
-      emptyResultView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-      emptyResultView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
-      emptyResultView.heightAnchor.constraint(equalToConstant: 250),
-      emptyResultView.widthAnchor.constraint(equalToConstant: 225)
+      typeToSearchView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+      typeToSearchView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      typeToSearchView.heightAnchor.constraint(equalToConstant: 250),
+      typeToSearchView.widthAnchor.constraint(equalToConstant: 225)
     ]
     NSLayoutConstraint.activate(constrains)
-    emptyResultView.isHidden = true
+    typeToSearchView.isHidden = true
   }
   
   private func setupAppearance(of searchBar: UISearchBar) {
@@ -164,57 +189,20 @@ extension PersonsSearchViewController {
     for view in subViews {
       if let textField = view as? UITextField {
         textField.backgroundColor = #colorLiteral(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1)
-        textField.leftViewMode = .unlessEditing
         break
       }
     }
     searchBar.resignFirstResponder()
   }
-  
-}
-
-extension PersonsSearchViewController {
-  
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    let currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
-    pageControl.currentPage = currentPage
-  }
-  
-}
-
-// MARK: - UICollectionViewDataSource
-extension PersonsSearchViewController: UICollectionViewDataSource {
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return persons.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: PersonCollectionViewCell = collectionView.dequeue(forIndexPath: indexPath)
-    let person = persons[indexPath.row]
-    cell.configureWith(viewModel: person)
-    return cell
-  }
-  
-}
-
-// MARK: - UICollectionViewDelegate
-extension PersonsSearchViewController: UICollectionViewDelegate {
-  
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    didSelectPerson.accept(indexPath.row)
-  }
-  
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension PersonsSearchViewController: UICollectionViewDelegateFlowLayout {
-  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    return collectionView.frame.size
   }
   
   func collectionView(_ collectionView: UICollectionView,
@@ -222,5 +210,4 @@ extension PersonsSearchViewController: UICollectionViewDelegateFlowLayout {
                       minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
-  
 }

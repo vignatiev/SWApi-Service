@@ -6,29 +6,29 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 
 protocol PersonsSearchModuleOutput: AnyObject {
   var showPersonDetails: Signal<Person> { get }
 }
 
 final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
-  
   private let model: PersonsSearchModel
   private let disposeBag = DisposeBag()
   
   // MARK: PersonsSearchModuleOutput Properties
+  
   let showPersonDetails: Signal<Person>
   private let _showPersonDetails = PublishRelay<Person>()
   
   init(model: PersonsSearchModel) {
     self.model = model
-    
-    showPersonDetails = _showPersonDetails.asSignal()
+    self.showPersonDetails = _showPersonDetails.asSignal()
   }
   
   // MARK: ViewModelType Implementation
+  
   func transform(input: Input) -> Output {
     input.searchText
       .bind(to: model.searchText)
@@ -52,10 +52,10 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     let isEmptyResultViewVisible = model.persons.asDriver().map { !$0.areLocal && $0.persons.isEmpty }
     
     let isDataSourceLabelVisible = model.persons.asDriver().map { $0.persons.isNotEmpty }
-    let dataSource = model.persons.asDriver()
-      .map {
-        return $0.areLocal ? LocalizedString.personSearchSourceLocal : LocalizedString.personSearchSourceResponse
-      }.map { $0.uppercased() }
+    let dataSource = model.persons.asDriver().map {
+      $0.areLocal ? LocalizedString.personSearchSourceLocal : LocalizedString.personSearchSourceResponse
+    }
+    .map { $0.uppercased() }
     
     let contentAbsenceViewVisibile = Observable
       .combineLatest(typeToSearchViewVisible.asObservable(), isEmptyResultViewVisible.asObservable())
@@ -67,8 +67,9 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     // Module Output
     let selectedPerson = input.itemWasSelected
       .withLatestFrom(sortedPersons) { index, persons -> Person? in
-        return persons[unsafeIndex: index]
-      }.filterNil()
+        persons[unsafeIndex: index]
+      }
+      .filterNil()
     
     selectedPerson.bind(to: _showPersonDetails).disposed(by: disposeBag)
     selectedPerson.bind(to: model.didSelectPerson).disposed(by: disposeBag)
@@ -99,7 +100,7 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
         let currentTime = Date().timeIntervalSince1970
         
         return (currentTime - lastInputTimeStamp) > keyboardHidingDelay
-    }
+      }
     
     let hideKeyboard = hideKeyboardTrigger
       .withLatestFrom(contentAbsenceViewVisibile)
@@ -128,14 +129,12 @@ final class PersonsSearchViewModel: ViewModelType, PersonsSearchModuleOutput {
     
     let dataSource: Driver<String>
   }
-  
 }
 
 extension PersonsSearchViewModel {
-  
   // MARK: - PersonViewModel
+  
   struct PersonViewModel {
-    
     let name: Field
     let height: Field
     let mass: Field
@@ -159,7 +158,5 @@ extension PersonsSearchViewModel {
       let title: String
       let value: String
     }
-    
   }
-  
 }

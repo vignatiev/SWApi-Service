@@ -8,21 +8,17 @@
 
 import UIKit
 
-final class EmptyResultView: UIView {
-  
+final class EmptyResultView: UIView, NibLoadable {
   @IBOutlet private var noResultsLabel: UILabel!
   @IBOutlet private var imageView: UIImageView!
-  
+
   override func awakeFromNib() {
     super.awakeFromNib()
-    
+
     imageView.contentMode = .scaleToFill
     imageView.alpha = 0.9
-    
+
     noResultsLabel.text = LocalizedString.emptyResultsText
     noResultsLabel.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
   }
-
 }
-
-extension EmptyResultView: NibLoadable { }

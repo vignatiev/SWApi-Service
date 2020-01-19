@@ -6,16 +6,14 @@
 //  Copyright © 2019 Владислав Игнатьев. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 extension Reactive where Base: UIView {
-  
   public var isVisible: Binder<Bool> {
     return Binder(self.base) { view, visible in
       view.isHidden = !visible
     }
   }
-  
 }

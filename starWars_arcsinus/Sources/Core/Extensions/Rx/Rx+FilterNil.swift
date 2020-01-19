@@ -12,7 +12,7 @@ import RxSwift
 
 public protocol OptionalType {
   associatedtype Wrapped
-  
+
   var value: Wrapped? { get }
 }
 
@@ -28,7 +28,7 @@ extension ObservableType where E: OptionalType {
    Unwraps and filters out `nil` elements.
    - returns: `Observable` of source `Observable`'s elements, with `nil` elements filtered out.
    */
-  
+
   public func filterNil() -> Observable<E.Wrapped> {
     return flatMap { element -> Observable<E.Wrapped> in
       guard let value = element.value else {

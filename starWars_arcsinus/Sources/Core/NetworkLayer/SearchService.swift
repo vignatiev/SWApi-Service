@@ -10,7 +10,6 @@ import Alamofire
 import ObjectMapper
 
 final class SearchService {
-  
   static let shared = SearchService()
   
   private var sessions: [ObjectIdentifier: Session] = [:]
@@ -26,14 +25,13 @@ final class SearchService {
       }
       return "api/" + suffix
     }
-    
   }
   
-  private init() { }
+  private init() {}
   
   @discardableResult
   func getPerson(withName name: String,
-                 completion: @escaping(Result<[Person], ApiError>) -> Void) -> DataRequest {
+                 completion: @escaping (Result<[Person], ApiError>) -> Void) -> DataRequest {
     let url = makeUrl(withPath: SearchResource.people)!
     let parameters: Parameters = ["search": name]
     
@@ -67,7 +65,7 @@ final class SearchService {
           result = self.responseFailureResult(response: response, error: error)
         }
         completion(result)
-    }
+      }
     
     return request
   }
@@ -82,8 +80,7 @@ final class SearchService {
   
   @discardableResult
   func getPlanet(withUrl url: URL,
-                 completion: @escaping(Result<Planet, ApiError>) -> Void) -> DataRequest {
-    
+                 completion: @escaping (Result<Planet, ApiError>) -> Void) -> DataRequest {
     let configuration = URLSessionConfiguration.default
     configuration.timeoutIntervalForRequest = 5
     configuration.timeoutIntervalForResource = 5
@@ -112,8 +109,7 @@ final class SearchService {
           result = self.responseFailureResult(response: response, error: error)
         }
         completion(result)
-    }
-    
+      }
     return request
   }
   
@@ -143,15 +139,9 @@ final class SearchService {
     
     return .failure(apiError)
   }
-  
-  enum Errors: Error {
-    case invalidUrl
-  }
-  
 }
 
 enum ApiError: Error, LocalizedError {
-  
   case authorizationError // http коды 401, 403
   case clientError(underlyingError: Error) // 400-е http коды
   case serverError(underlyingError: Error) // 500-е http коды
@@ -162,14 +152,15 @@ enum ApiError: Error, LocalizedError {
   
   /// Api error description
   var errorDescription: String {
+    let description: String
     switch self {
-    case .clientError: return LocalizedString.errorsClientError
-    case .authorizationError: return LocalizedString.errorsAuthError
-    case .mappingError: return LocalizedString.errorsMappingError
-    case .serverError: return LocalizedString.errorsServerError
-    case .networkError: return LocalizedString.errorsNetworkError
-    case .unknownError: return LocalizedString.errorsUnknownError
+    case .clientError: description = LocalizedString.errorsClientError
+    case .authorizationError: description = LocalizedString.errorsAuthError
+    case .mappingError: description = LocalizedString.errorsMappingError
+    case .serverError: description = LocalizedString.errorsServerError
+    case .networkError: description = LocalizedString.errorsNetworkError
+    case .unknownError: description = LocalizedString.errorsUnknownError
     }
+    return description
   }
-  
 }
