@@ -7,10 +7,8 @@
 //
 
 protocol ViewModelType: AnyObject {
-  
   associatedtype Input
   associatedtype Output
   
   func transform(input: Input) -> Output
-  
 }

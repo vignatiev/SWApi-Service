@@ -21,8 +21,7 @@ extension RealmDomainTransformable where Self: Object {
 }
 
 class LocalStorage<Model, RealmObject> where Model: Hashable,
-RealmObject: Object & RealmDomainTransformable, RealmObject.DomainType == Model {
-  
+  RealmObject: Object & RealmDomainTransformable, RealmObject.DomainType == Model {
   private let realm = try! Realm() // swiftlint:disable:this force_try
   
   var uniqueKeyName: String {
@@ -92,13 +91,11 @@ RealmObject: Object & RealmDomainTransformable, RealmObject.DomainType == Model 
   
   private func firstRealmObject(of entity: Model) -> RealmObject? {
     let predicate = uniqueKeyName + " = %@"
-    
     return realm.objects(RealmObject.self).filter(predicate, entity[keyPath: uniqueKeyPath]).first
   }
 }
 
 extension LocalStorage {
-  
   func getAllEntities<V>(sortedBy keyPath: KeyPath<Model, V>,
                          _ sorting: Sorting) -> [Model] where V: Comparable {
     switch sorting {
@@ -118,5 +115,4 @@ extension LocalStorage {
     case entityIsNotUnique
     case entityNotFound
   }
-  
 }

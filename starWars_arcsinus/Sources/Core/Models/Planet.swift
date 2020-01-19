@@ -9,7 +9,6 @@
 import ObjectMapper
 
 struct Planet: Mappable {
-  
   var name: String!
   var rotationPeriod: String!
   var orbitalPeriod: String!
@@ -20,7 +19,7 @@ struct Planet: Mappable {
   var surfaceWater: String!
   var population: String!
   
-  init?(map: Map) { }
+  init?(map: Map) {}
   
   mutating func mapping(map: Map) {
     self.name <- map["name"]
@@ -33,5 +32,4 @@ struct Planet: Mappable {
     self.surfaceWater <- map["surface_water"]
     self.population <- map["population"]
   }
-  
 }

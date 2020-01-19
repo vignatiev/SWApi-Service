@@ -8,8 +8,7 @@
 
 import UIKit
 
-final class PersonCollectionViewCell: UICollectionViewCell {
-  
+final class PersonCollectionViewCell: UICollectionViewCell, RegisterableCell, TouchableView {
   @IBOutlet private var nameLabel: UILabel!
   @IBOutlet private var viewWithName: UIView!
   @IBOutlet private var genderLabel: UILabel!
@@ -19,22 +18,14 @@ final class PersonCollectionViewCell: UICollectionViewCell {
   @IBOutlet private var massLabel: UILabel!
   @IBOutlet private var containerView: UIView!
   
-  private var isTouched: Bool = false {
+  var isTouched: Bool = false {
     didSet {
-      var transform = CGAffineTransform.identity
-      if isTouched {
-        transform = transform.scaledBy(x: 0.96, y: 0.96)
-      }
-      UIView.animate(withDuration: 0.22, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8,
-                     options: [.beginFromCurrentState], animations: {
-                      self.transform = transform
-      })
+      updateTransform(for: isTouched)
     }
   }
   
   override func prepareForReuse() {
     super.prepareForReuse()
-    
     nameLabel.text = nil
     genderLabel.text = nil
     birthYearLabel.text = nil
@@ -70,15 +61,34 @@ final class PersonCollectionViewCell: UICollectionViewCell {
     birthYearLabel.text = "\(birthYear.title): \(birthYear.value)"
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesBegan(touches, with: event)
+    isTouched = true
+  }
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesEnded(touches, with: event)
+    isTouched = false
+  }
+  
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesCancelled(touches, with: event)
+    isTouched = false
+  }
+}
+
+// MARK: - UI config
+
+extension PersonCollectionViewCell {
   private func initialSetup() {
     let cornerRadius: CGFloat = 30
     
     imageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     imageView.layer.cornerRadius = cornerRadius
-
+    
     containerView.layer.cornerRadius = cornerRadius
     containerView.layer.masksToBounds = false
-
+    
     viewWithName.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     viewWithName.layer.cornerRadius = cornerRadius
     
@@ -87,24 +97,4 @@ final class PersonCollectionViewCell: UICollectionViewCell {
     nameLabel.textAlignment = .left
     nameLabel.font = UIFont.systemFont(ofSize: 23, weight: .heavy)
   }
-  
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesBegan(touches, with: event)
-    isTouched = true
-  }
-  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesEnded(touches, with: event)
-    isTouched = false
-  }
-  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    super.touchesCancelled(touches, with: event)
-    isTouched = false
-  }
-  
 }
-
-extension PersonCollectionViewCell: TableViewDequeuable { }
-
-extension PersonCollectionViewCell: TableViewRegisterable { }
-
-extension PersonCollectionViewCell: NibLoadable { }

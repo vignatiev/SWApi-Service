@@ -9,7 +9,6 @@
 import ObjectMapper
 
 struct Person: Hashable {
-  
   var name: String!
   var height: String!
   var mass: String!
@@ -33,13 +32,12 @@ struct Person: Hashable {
     self.gender = gender
     self.homeWorldURL = homeWorldURL
   }
-  
 }
 
 // MARK: - Mappable
+
 extension Person: Mappable {
-  
-  init?(map: Map) { }
+  init?(map: Map) {}
   
   mutating func mapping(map: Map) {
     self.name <- map["name"]
@@ -54,17 +52,14 @@ extension Person: Mappable {
     stringUrl <- map["homeworld"]
     self.homeWorldURL = try! stringUrl.asURL() // swiftlint:disable:this force_try
   }
-  
 }
 
 struct PersonsSearchResponse: Mappable {
-  
   var persons: [Person]!
   
-  init?(map: Map) { }
+  init?(map: Map) {}
   
   mutating func mapping(map: Map) {
     self.persons <- map["results"]
   }
-  
 }

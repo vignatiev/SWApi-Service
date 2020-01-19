@@ -13,6 +13,7 @@ public enum Result<Value, Error: Swift.Error>: CustomStringConvertible, CustomDe
   case failure(Error)
   
   // MARK: Constructors
+  
   /// Constructs a success wrapping a `value`.
   public init(value: Value) {
     self = .success(value)
@@ -34,6 +35,7 @@ public enum Result<Value, Error: Swift.Error>: CustomStringConvertible, CustomDe
   }
   
   // MARK: CustomStringConvertible
+  
   public var description: String {
     switch self {
     case let .success(value): return ".success(\(value))"
@@ -42,8 +44,8 @@ public enum Result<Value, Error: Swift.Error>: CustomStringConvertible, CustomDe
   }
   
   // MARK: CustomDebugStringConvertible
+  
   public var debugDescription: String {
     return description
   }
-  
 }

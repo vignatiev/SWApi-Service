@@ -17,8 +17,8 @@ final class PersonsLocalStorage: LocalStorage<Person, PersonObject> {
 }
 
 // MARK: Realm Data Structures
+
 final class PersonObject: Object {
-  
   @objc dynamic var name: String = ""
   @objc dynamic var height: String = ""
   @objc dynamic var mass: String = ""
@@ -40,11 +40,9 @@ final class PersonObject: Object {
     gender = person.gender
     homeworldURL = person.homeWorldURL.relativeString
   }
-  
 }
 
 extension PersonObject: RealmDomainTransformable {
-  
   typealias DomainType = Person
   
   func asDomain() throws -> Person {
@@ -60,5 +58,4 @@ extension PersonObject: RealmDomainTransformable {
                   gender: gender,
                   homeWorldURL: homeWorldURL)
   }
-  
 }

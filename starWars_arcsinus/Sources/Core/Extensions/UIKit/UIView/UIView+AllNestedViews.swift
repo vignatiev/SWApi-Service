@@ -9,15 +9,12 @@
 import UIKit
 
 extension UIView {
-  
   func allNestedSubviews() -> Set<UIView> {
     var allSubViews = Set(subviews)
     
     for view in subviews {
       allSubViews.formUnion(view.allNestedSubviews())
     }
-    
     return allSubViews
   }
-  
 }

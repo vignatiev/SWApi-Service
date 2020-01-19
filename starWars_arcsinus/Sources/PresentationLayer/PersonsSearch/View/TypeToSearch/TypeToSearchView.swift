@@ -8,17 +8,13 @@
 
 import UIKit
 
-final class TypeToSearchView: UIView {
+final class TypeToSearchView: UIView, NibLoadable {
+  @IBOutlet private var typeToSearchLabel: UILabel!
 
-  @IBOutlet var typeToSearchLabel: UILabel!
-  
   override func awakeFromNib() {
     super.awakeFromNib()
-    
+
     typeToSearchLabel.text = LocalizedString.typeToSearchLabel
     typeToSearchLabel.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
   }
-  
 }
-
-extension TypeToSearchView: NibLoadable { }
